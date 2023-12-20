@@ -1,29 +1,20 @@
-FROM golang:1.21.5-alpine
+# Use an official Golang runtime as a parent image
+FROM golang:latest
 
+# Set the working directory to /app
+WORKDIR /app
 
+# Copy the current directory contents into the container at /app
+COPY . /app
 
-
-
-ENV GO111MODULE=on
-ENV GOFLAGS-mod=vendor
-
-ENV APP_HOME /go/src/agency_management
-
-RUN mkdir -p "$APP_HOME"
-
-WORKDIR "$APP_HOME"
-
-# copy the dependencies file to the working directory
-COPY go.mod ./go.sum ./
-
-
+# Download and install any required dependencies
 RUN go mod download
 
-# copy the source code to the working directory
-COPY *.go .
+# Build the Go app
+RUN go build -o main .
 
-RUN go build -o .
-
+# Expose port 8080 for incoming traffic
 EXPOSE 8080
 
-CMD [ "/Agency_management" ]
+# Define the command to run the app when the container starts
+CMD ["/app/main"]
