@@ -4,17 +4,11 @@ import "Agency_management/internal/models"
 
 type AgencyInterface interface {
 	Create(agency *models.Agency) (models.Agency, error)
-
 	FindAll() ([]*models.Agency, error)
-
 	FindById(id string) (*models.Agency, error)
-
 	Update(agency *models.Agency) error
-
 	Delete(agency *models.Agency) error
-
 	FindByName(name string) (*models.Agency, error)
-
 	FindByEmail(email string) (*models.Agency, error)
 }
 
