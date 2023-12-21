@@ -9,18 +9,23 @@ service AgencyService {
     rpc DeleteAgency(DeleteAgencyRequest) returns (DeleteAgencyResponse);
 }
 
+message Agency{
+  string id = 1;
+  string name = 2;
+}
+
 message GetAgenciesRequest{
   string id = 1;
   string name = 2;
 }
 
 message GetAgenciesResponse{
-  string id = 1;
-  string name = 2;
+   string id = 2;
+   string name = 3;
 }
 
 message GetAgencyRequest{
-  string id = 1;
+  string name = 1;
 }
 
 message GetAgencyResponse{
@@ -49,8 +54,10 @@ message UpdateAgencyResponse{
 
 message DeleteAgencyRequest{
   string id = 1;
+  string name = 2;
 }
 
 message DeleteAgencyResponse{
   string id = 1;
+  string name = 2;
 }
