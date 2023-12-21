@@ -16,8 +16,9 @@ func (r Repository) Create(agency *models.Agency) (models.Agency, error) {
 }
 
 func (r Repository) FindAll() ([]*models.Agency, error) {
-	err := r.db.Find(&models.Agency{}).Error
-	return nil, err
+	var agencies []*models.Agency
+	err := r.db.Find(&agencies).Error
+	return agencies, err
 }
 
 func (r Repository) FindById(id string) (*models.Agency, error) {
@@ -36,8 +37,9 @@ func (r Repository) Delete(agency *models.Agency) error {
 }
 
 func (r Repository) FindByName(name string) (*models.Agency, error) {
-	err := r.db.Where("name=?", name).First(&models.Agency{}).Error
-	return nil, err
+	agency := &models.Agency{}
+	err := r.db.Where("name=?", name).First(agency).Error
+	return agency, err
 }
 
 func (r Repository) FindByEmail(email string) (*models.Agency, error) {

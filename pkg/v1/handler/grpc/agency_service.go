@@ -33,14 +33,19 @@ func (srv *AgencyService) GetAgency(ctx context.Context, req *pb.GetAgencyReques
 	if data.Name == "" {
 		return &pb.GetAgencyResponse{}, errors.New("name is required")
 	}
-	agency, _ := srv.useCase.FindByName(data.Name)
-
-	return (*pb.GetAgencyResponse)(srv.transformAgencyModel(*agency)), nil
+	agency, err := srv.useCase.FindByName(data.Name)
+	if agency == nil {
+		return &pb.GetAgencyResponse{}, errors.New("agency not found")
+	}
+	return (*pb.GetAgencyResponse)(srv.transformAgencyModel(*agency)), err
 }
 
 func (srv *AgencyService) GetAgencies(ctx context.Context, req *pb.GetAgenciesRequest) (*pb.GetAgenciesResponse, error) {
-	agencies, _ := srv.useCase.FindAll()
-	return srv.transformAgenciesModel(agencies), nil
+	agencies, err := srv.useCase.FindAll()
+	if agencies == nil {
+		return &pb.GetAgenciesResponse{}, errors.New("agencies not found")
+	}
+	return srv.transformAgenciesModel(agencies), err
 }
 
 func (srv *AgencyService) UpdateAgency(ctx context.Context, req *pb.UpdateAgencyRequest) (*pb.UpdateAgencyResponse, error) {
@@ -94,13 +99,15 @@ func (srv *AgencyService) transformAgencyModel(agency models.Agency) *pb.CreateA
 }
 
 func (srv *AgencyService) transformAgenciesModel(agencies []*models.Agency) *pb.GetAgenciesResponse {
-	var agenciesRPC []*pb.CreateAgencyResponse
+	var agenciesRPC []*pb.Agency
 	for _, agency := range agencies {
-		agenciesRPC = append(agenciesRPC, srv.transformAgencyModel(*agency))
+		agenciesRPC = append(agenciesRPC, &pb.Agency{
+			Id:   agency.ID,
+			Name: agency.Name,
+		})
 	}
 	return &pb.GetAgenciesResponse{
-		Name: agenciesRPC[0].Name,
-		Id:   agenciesRPC[0].Id,
+		Agencies: agenciesRPC,
 	}
 }
 

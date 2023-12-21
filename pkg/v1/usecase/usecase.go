@@ -17,13 +17,13 @@ func (u UseCase) GetById(id string) (*models.Agency, error) {
 }
 
 func (u UseCase) FindAll() ([]*models.Agency, error) {
-	_, err := u.repo.FindAll()
-	return nil, err
+	agencies, err := u.repo.FindAll()
+	return agencies, err
 }
 
 func (u UseCase) FindByName(name string) (*models.Agency, error) {
-	err, _ := u.repo.FindByName(name)
-	return nil, err
+	agency, err := u.repo.FindByName(name)
+	return agency, err
 }
 
 func (u UseCase) FindByEmail(email string) (*models.Agency, error) {
