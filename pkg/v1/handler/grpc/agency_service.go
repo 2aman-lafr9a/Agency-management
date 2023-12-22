@@ -61,9 +61,11 @@ func (srv *AgencyService) UpdateAgency(ctx context.Context, req *pb.UpdateAgency
 
 func (srv *AgencyService) DeleteAgency(ctx context.Context, req *pb.DeleteAgencyRequest) (*pb.DeleteAgencyResponse, error) {
 	data := srv.transformAgencyRPCDelete(req)
-	if data.Name == "" {
-		return &pb.DeleteAgencyResponse{}, errors.New("name is required")
+	if data.ID == "" {
+		return &pb.DeleteAgencyResponse{}, errors.New("id is required")
 	}
+	agency, _ := srv.useCase.FindById(data.ID)
+	_ = srv.useCase.Delete(agency)
 	return srv.transformAgencyModelDelete(*data), nil
 }
 
@@ -87,7 +89,7 @@ func (srv *AgencyService) transformAgencyRPCUpdate(req *pb.UpdateAgencyRequest) 
 
 func (srv *AgencyService) transformAgencyRPCDelete(req *pb.DeleteAgencyRequest) *models.Agency {
 	return &models.Agency{
-		Name: req.GetId(),
+		ID: req.GetId(),
 	}
 }
 

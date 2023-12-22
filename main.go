@@ -25,20 +25,24 @@ func main() {
 
 	grpcServer := grpc.NewServer()
 
-	agencyUseCase := initUserServer(db)
+	agencyUseCase, OfferUseCase := initUserServer(db)
 	handler.NewServer(grpcServer, agencyUseCase)
+	handler.NewServer2(grpcServer, OfferUseCase)
 
 	log.Fatalf("Failed to serve: %v", grpcServer.Serve(lis))
 }
 
-func initUserServer(db *gorm.DB) interfaces.UseCaseInterface {
+func initUserServer(db *gorm.DB) (interfaces.UseCaseInterface, interfaces.UseCaseInterface) {
 	agencyRepo := repo.New(db)
+	offerRepo := repo.New2(db)
 	agencyUseCase := usecase.New(agencyRepo)
-	return agencyUseCase
+	offerUseCase := usecase.New2(offerRepo)
+	return agencyUseCase, offerUseCase
 }
 
 func migrations(db *gorm.DB) {
 	err := db.AutoMigrate(&models.Agency{})
+	err = db.AutoMigrate(&models.Offer{})
 	if err != nil {
 		fmt.Println(err)
 	} else {

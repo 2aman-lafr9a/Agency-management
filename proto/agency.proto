@@ -40,7 +40,6 @@ message CreateAgencyResponse{
 }
 
 message UpdateAgencyRequest{
-  string id = 1;
   string name = 2;
 }
 
@@ -51,10 +50,94 @@ message UpdateAgencyResponse{
 
 message DeleteAgencyRequest{
   string id = 1;
-  string name = 2;
 }
 
 message DeleteAgencyResponse{
   string id = 1;
   string name = 2;
+}
+
+service OfferService {
+    rpc GetOffers(GetOffersRequest) returns (GetOffersResponse);
+    rpc GetOffer(GetOfferRequest) returns (GetOfferResponse);
+    rpc CreateOffer(CreateOfferRequest) returns (CreateOfferResponse);
+    rpc UpdateOffer(UpdateOfferRequest) returns (UpdateOfferResponse);
+    rpc DeleteOffer(DeleteOfferRequest) returns (DeleteOfferResponse);
+}
+
+message Offer{
+  string id = 1;
+  string name = 2;
+  string agency_id = 3;
+  string description = 4;
+  string price = 5;
+  string date = 6;
+}
+
+message GetOffersRequest{
+}
+
+message GetOffersResponse{
+  repeated Offer offers = 1;
+}
+
+message GetOfferRequest{
+  string id = 1;
+}
+
+message GetOfferResponse{
+  string id = 1;
+  string name = 2;
+  string agency_id = 3;
+  string description = 4;
+  string price = 5;
+  string date = 6;
+}
+
+message CreateOfferRequest{
+  string name = 1;
+  string agency_id = 2;
+  string description = 3;
+  string price = 4;
+  string date = 5;
+}
+
+message CreateOfferResponse{
+  string id = 1;
+  string name = 2;
+  string agency_id = 3;
+  string description = 4;
+  string price = 5;
+  string date = 6;
+}
+
+message UpdateOfferRequest{
+  string id = 1;
+  string name = 2;
+  string agency_id = 3;
+  string description = 4;
+  string price = 5;
+  string date = 6;
+}
+
+message UpdateOfferResponse{
+  string id = 1;
+  string name = 2;
+  string agency_id = 3;
+  string description = 4;
+  string price = 5;
+  string date = 6;
+}
+
+message DeleteOfferRequest{
+  string id = 1;
+}
+
+message DeleteOfferResponse{
+  string id = 1;
+  string name = 2;
+  string agency_id = 3;
+  string description = 4;
+  string price = 5;
+  string date = 6;
 }

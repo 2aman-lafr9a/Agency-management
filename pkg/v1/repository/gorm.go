@@ -22,8 +22,9 @@ func (r Repository) FindAll() ([]*models.Agency, error) {
 }
 
 func (r Repository) FindById(id string) (*models.Agency, error) {
-	err := r.db.First(&models.Agency{}, id).Error
-	return nil, err
+	agency := &models.Agency{}
+	err := r.db.Where("id=?", id).First(agency).Error
+	return agency, err
 }
 
 func (r Repository) Update(agency *models.Agency) error {
@@ -49,4 +50,41 @@ func (r Repository) FindByEmail(email string) (*models.Agency, error) {
 
 func New(db *gorm.DB) *Repository {
 	return &Repository{db: db}
+}
+
+func New2(db *gorm.DB) *Repository {
+	return &Repository{db: db}
+}
+
+func (r Repository) Create2(offer *models.Offer) (models.Offer, error) {
+	err := r.db.Create(offer).Error
+	return *offer, err
+}
+
+func (r Repository) FindAll2() ([]*models.Offer, error) {
+	var offers []*models.Offer
+	err := r.db.Find(&offers).Error
+	return offers, err
+}
+
+func (r Repository) FindById2(id string) (*models.Offer, error) {
+	offer := &models.Offer{}
+	err := r.db.Where("id=?", id).First(offer).Error
+	return offer, err
+}
+
+func (r Repository) Update2(offer *models.Offer) error {
+	err := r.db.Save(offer).Error
+	return err
+}
+
+func (r Repository) Delete2(offer *models.Offer) error {
+	err := r.db.Delete(offer).Error
+	return err
+}
+
+func (r Repository) FindByName2(name string) (*models.Offer, error) {
+	offer := &models.Offer{}
+	err := r.db.Where("name=?", name).First(offer).Error
+	return offer, err
 }
