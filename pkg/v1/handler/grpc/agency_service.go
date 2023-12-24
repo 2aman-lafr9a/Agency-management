@@ -24,8 +24,8 @@ func (srv *AgencyService) CreateAgency(ctx context.Context, req *pb.CreateAgency
 	if data.Name == "" {
 		return &pb.CreateAgencyResponse{}, errors.New("name is required")
 	}
-	agency, _ := srv.useCase.Create(data)
-	return (*pb.CreateAgencyResponse)(srv.transformAgencyModel(agency)), nil
+	agency, err := srv.useCase.Create(data)
+	return srv.transformAgencyModel(agency), err
 }
 
 func (srv *AgencyService) GetAgency(ctx context.Context, req *pb.GetAgencyRequest) (*pb.GetAgencyResponse, error) {
@@ -37,7 +37,7 @@ func (srv *AgencyService) GetAgency(ctx context.Context, req *pb.GetAgencyReques
 	if agency == nil {
 		return &pb.GetAgencyResponse{}, errors.New("agency not found")
 	}
-	return (*pb.GetAgencyResponse)(srv.transformAgencyModel(*agency)), err
+	return srv.transformAgencyModelGet(*agency), err
 }
 
 func (srv *AgencyService) GetAgencies(ctx context.Context, req *pb.GetAgenciesRequest) (*pb.GetAgenciesResponse, error) {
@@ -50,13 +50,13 @@ func (srv *AgencyService) GetAgencies(ctx context.Context, req *pb.GetAgenciesRe
 
 func (srv *AgencyService) UpdateAgency(ctx context.Context, req *pb.UpdateAgencyRequest) (*pb.UpdateAgencyResponse, error) {
 	data := srv.transformAgencyRPCUpdate(req)
-	if data.Name == "" {
+	if data.ID == "" {
 		return &pb.UpdateAgencyResponse{}, errors.New("name is required")
 	}
-	agency, _ := srv.useCase.FindByName(data.Name)
+	agency, err := srv.useCase.FindById(data.ID)
 	agency.Name = data.Name
 	_ = srv.useCase.Update(agency)
-	return (*pb.UpdateAgencyResponse)(srv.transformAgencyModel(*agency)), nil
+	return srv.transformAgencyModelUpdate(*agency), err
 }
 
 func (srv *AgencyService) DeleteAgency(ctx context.Context, req *pb.DeleteAgencyRequest) (*pb.DeleteAgencyResponse, error) {
@@ -83,6 +83,7 @@ func (srv *AgencyService) transformAgencyRPCGet(req *pb.GetAgencyRequest) *model
 
 func (srv *AgencyService) transformAgencyRPCUpdate(req *pb.UpdateAgencyRequest) *models.Agency {
 	return &models.Agency{
+		ID:   req.GetId(),
 		Name: req.GetName(),
 	}
 }
@@ -95,6 +96,19 @@ func (srv *AgencyService) transformAgencyRPCDelete(req *pb.DeleteAgencyRequest) 
 
 func (srv *AgencyService) transformAgencyModel(agency models.Agency) *pb.CreateAgencyResponse {
 	return &pb.CreateAgencyResponse{
+		Name: agency.Name,
+	}
+}
+
+func (srv *AgencyService) transformAgencyModelGet(agency models.Agency) *pb.GetAgencyResponse {
+	return &pb.GetAgencyResponse{
+		Id:   agency.ID,
+		Name: agency.Name,
+	}
+}
+
+func (srv *AgencyService) transformAgencyModelUpdate(agency models.Agency) *pb.UpdateAgencyResponse {
+	return &pb.UpdateAgencyResponse{
 		Id:   agency.ID,
 		Name: agency.Name,
 	}

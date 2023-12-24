@@ -35,11 +35,11 @@ message CreateAgencyRequest{
 }
 
 message CreateAgencyResponse{
-  string id = 1;
-  string name = 2;
+  string name = 1;
 }
 
 message UpdateAgencyRequest{
+  string id = 1;
   string name = 2;
 }
 
@@ -82,7 +82,7 @@ message GetOffersResponse{
 }
 
 message GetOfferRequest{
-  string id = 1;
+  string name = 1;
 }
 
 message GetOfferResponse{

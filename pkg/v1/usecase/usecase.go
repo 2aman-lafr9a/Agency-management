@@ -33,8 +33,8 @@ func (u UseCase) FindById(id string) (*models.Agency, error) {
 }
 
 func (u UseCase) Create(agency *models.Agency) (models.Agency, error) {
-	err, _ := u.repo.Create(agency)
-	return *agency, err
+	agenc, err := u.repo.Create(agency)
+	return agenc, err
 }
 
 func (u UseCase) Update(agency *models.Agency) error {
