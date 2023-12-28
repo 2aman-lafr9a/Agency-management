@@ -1,28 +1,27 @@
 package db
 
 import (
-	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"log"
 	"os"
 )
 
-func goDotEnvVariable(key string) string {
-
-	// load .env file
-	err := godotenv.Load(".env", ".env.prod")
-
-	if err != nil {
-		log.Fatalf("Error loading .env file")
+func getDataBaseUrl() string {
+	host := os.Getenv("HOST")
+	user := os.Getenv("DB_USERNAME")
+	password := os.Getenv("DB_PASSWORD")
+	if host == "" || user == "" || password == "" {
+		host = "localhost"
+		user = "postgres"
+		password = "password"
 	}
-
-	return os.Getenv(key)
+	return "host=" + host + " user=" + user + " password=" + password + " dbname=agency_management port=5432"
 }
 
 func Conn() *gorm.DB {
 	db, err := gorm.Open(
-		postgres.Open("host="+goDotEnvVariable("host")+" user="+goDotEnvVariable("username")+" password="+goDotEnvVariable("password")+" dbname=agency_management port=5432"), &gorm.Config{},
+		postgres.Open(getDataBaseUrl()), &gorm.Config{},
 	)
 
 	if err != nil {
