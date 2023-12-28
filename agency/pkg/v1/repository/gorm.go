@@ -1,8 +1,8 @@
 package repository
 
 import (
-	"Agency_management/internal/models"
-	_ "Agency_management/pkg/v1"
+	"agency/internal/models"
+	_ "agency/pkg/v1"
 	"gorm.io/gorm"
 )
 

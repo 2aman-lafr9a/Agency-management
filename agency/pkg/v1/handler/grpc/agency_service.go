@@ -1,9 +1,9 @@
 package grpc
 
 import (
-	"Agency_management/internal/models"
-	interfaces "Agency_management/pkg/v1"
-	pb "Agency_management/proto"
+	"agency/internal/models"
+	interfaces "agency/pkg/v1"
+	pb "agency/proto"
 	"context"
 	"errors"
 	"google.golang.org/grpc"

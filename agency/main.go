@@ -1,12 +1,12 @@
 package main
 
 import (
-	dbConfig "Agency_management/internal/db"
-	"Agency_management/internal/models"
-	interfaces "Agency_management/pkg/v1"
-	handler "Agency_management/pkg/v1/handler/grpc"
-	repo "Agency_management/pkg/v1/repository"
-	usecase "Agency_management/pkg/v1/usecase"
+	dbConfig "agency/internal/db"
+	"agency/internal/models"
+	interfaces "agency/pkg/v1"
+	handler "agency/pkg/v1/handler/grpc"
+	repo "agency/pkg/v1/repository"
+	usecase "agency/pkg/v1/usecase"
 	"fmt"
 	"google.golang.org/grpc"
 	"gorm.io/gorm"

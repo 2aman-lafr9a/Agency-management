@@ -1,7 +1,7 @@
 package v1
 
 import (
-	"Agency_management/internal/models"
+	"agency/internal/models"
 )
 
 type AgencyInterface interface {

@@ -1,4 +1,4 @@
-module Agency_management
+module agency
 
 go 1.21
 

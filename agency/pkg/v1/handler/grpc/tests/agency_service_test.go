@@ -1,7 +1,7 @@
 package tests
 
 import (
-	pb "Agency_management/proto"
+	pb "agency/proto"
 	"context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"

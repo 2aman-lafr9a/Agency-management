@@ -1,8 +1,8 @@
 package UseCase
 
 import (
-	"Agency_management/internal/models"
-	interfaces "Agency_management/pkg/v1"
+	"agency/internal/models"
+	interfaces "agency/pkg/v1"
 	_ "errors"
 	_ "gorm.io/gorm"
 )
