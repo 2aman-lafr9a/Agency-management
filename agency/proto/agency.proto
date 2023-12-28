@@ -1,0 +1,58 @@
+syntax = "proto3";
+option go_package = "./proto";
+
+service AgencyService {
+    rpc GetAgencies(GetAgenciesRequest) returns (GetAgenciesResponse);
+    rpc GetAgency(GetAgencyRequest) returns (GetAgencyResponse);
+    rpc CreateAgency(CreateAgencyRequest) returns (CreateAgencyResponse);
+    rpc UpdateAgency(UpdateAgencyRequest) returns (UpdateAgencyResponse);
+    rpc DeleteAgency(DeleteAgencyRequest) returns (DeleteAgencyResponse);
+}
+
+message Agency{
+  string id = 1;
+  string name = 2;
+}
+
+message GetAgenciesRequest{
+}
+
+message GetAgenciesResponse{
+  repeated Agency agencies = 1;
+}
+
+message GetAgencyRequest{
+  string name = 1;
+}
+
+message GetAgencyResponse{
+  string id = 1;
+  string name = 2;
+}
+
+message CreateAgencyRequest{
+  string name = 1;
+}
+
+message CreateAgencyResponse{
+  string name = 1;
+}
+
+message UpdateAgencyRequest{
+  string id = 1;
+  string name = 2;
+}
+
+message UpdateAgencyResponse{
+  string id = 1;
+  string name = 2;
+}
+
+message DeleteAgencyRequest{
+  string id = 1;
+}
+
+message DeleteAgencyResponse{
+  string id = 1;
+  string name = 2;
+}
