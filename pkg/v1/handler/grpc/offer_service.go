@@ -77,7 +77,7 @@ func (srv *OfferService) transformOfferRPC(req *pb.CreateOfferRequest) *models.O
 
 func (srv *OfferService) transformOfferRPCGet(req *pb.GetOfferRequest) *models.Offer {
 	return &models.Offer{
-		ID: req.GetId(),
+		Name: req.Name,
 	}
 }
 

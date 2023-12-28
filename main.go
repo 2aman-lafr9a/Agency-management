@@ -18,7 +18,7 @@ func main() {
 	db := dbConfig.Conn()
 	migrations(db)
 
-	lis, err := net.Listen("tcp", ":8080")
+	lis, err := net.Listen("tcp", ":50001")
 	if err != nil {
 		log.Fatalf("Failed to listen: %v", err)
 	}
