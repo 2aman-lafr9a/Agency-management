@@ -8,7 +8,7 @@ import (
 )
 
 func getDataBaseUrl() string {
-	host := os.Getenv("HOST")
+	host := os.Getenv("DB_HOST")
 	user := os.Getenv("DB_USERNAME")
 	password := os.Getenv("DB_PASSWORD")
 	if host == "" || user == "" || password == "" {

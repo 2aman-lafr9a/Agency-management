@@ -7,17 +7,37 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_PASSWORD: password
+      POSTGRES_PASSWORD: postgres
       PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_DB: agency_management
     volumes:
       - /var/lib/postgresql/data
     restart: always
-  web:
+  agency_management:
     build:
-      context: ./
+      context: ./agency
     ports:
-      - "8080:8080"
+      - "50001:50001"
     restart: always
+    depends_on:
+      - postgres_container
+    environment:
+      DB_HOST: postgres_container
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+  offer_management:
+    build:
+      context: ./offer
+    ports:
+      - "50002:50002"
+    restart: always
+    depends_on:
+      - postgres_container
+    environment:
+      DB_HOST: postgres_container
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+
 
 
 
