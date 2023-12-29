@@ -18,10 +18,10 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// AgencyServiceClient is the client API for AgencyService service.
+// AgencyClient is the client API for Agency service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type AgencyServiceClient interface {
+type AgencyClient interface {
 	GetAgencies(ctx context.Context, in *GetAgenciesRequest, opts ...grpc.CallOption) (*GetAgenciesResponse, error)
 	GetAgency(ctx context.Context, in *GetAgencyRequest, opts ...grpc.CallOption) (*GetAgencyResponse, error)
 	CreateAgency(ctx context.Context, in *CreateAgencyRequest, opts ...grpc.CallOption) (*CreateAgencyResponse, error)
@@ -29,219 +29,219 @@ type AgencyServiceClient interface {
 	DeleteAgency(ctx context.Context, in *DeleteAgencyRequest, opts ...grpc.CallOption) (*DeleteAgencyResponse, error)
 }
 
-type agencyServiceClient struct {
+type agencyClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewAgencyServiceClient(cc grpc.ClientConnInterface) AgencyServiceClient {
-	return &agencyServiceClient{cc}
+func NewAgencyClient(cc grpc.ClientConnInterface) AgencyClient {
+	return &agencyClient{cc}
 }
 
-func (c *agencyServiceClient) GetAgencies(ctx context.Context, in *GetAgenciesRequest, opts ...grpc.CallOption) (*GetAgenciesResponse, error) {
+func (c *agencyClient) GetAgencies(ctx context.Context, in *GetAgenciesRequest, opts ...grpc.CallOption) (*GetAgenciesResponse, error) {
 	out := new(GetAgenciesResponse)
-	err := c.cc.Invoke(ctx, "/AgencyService/GetAgencies", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/Agency/GetAgencies", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *agencyServiceClient) GetAgency(ctx context.Context, in *GetAgencyRequest, opts ...grpc.CallOption) (*GetAgencyResponse, error) {
+func (c *agencyClient) GetAgency(ctx context.Context, in *GetAgencyRequest, opts ...grpc.CallOption) (*GetAgencyResponse, error) {
 	out := new(GetAgencyResponse)
-	err := c.cc.Invoke(ctx, "/AgencyService/GetAgency", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/Agency/GetAgency", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *agencyServiceClient) CreateAgency(ctx context.Context, in *CreateAgencyRequest, opts ...grpc.CallOption) (*CreateAgencyResponse, error) {
+func (c *agencyClient) CreateAgency(ctx context.Context, in *CreateAgencyRequest, opts ...grpc.CallOption) (*CreateAgencyResponse, error) {
 	out := new(CreateAgencyResponse)
-	err := c.cc.Invoke(ctx, "/AgencyService/CreateAgency", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/Agency/CreateAgency", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *agencyServiceClient) UpdateAgency(ctx context.Context, in *UpdateAgencyRequest, opts ...grpc.CallOption) (*UpdateAgencyResponse, error) {
+func (c *agencyClient) UpdateAgency(ctx context.Context, in *UpdateAgencyRequest, opts ...grpc.CallOption) (*UpdateAgencyResponse, error) {
 	out := new(UpdateAgencyResponse)
-	err := c.cc.Invoke(ctx, "/AgencyService/UpdateAgency", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/Agency/UpdateAgency", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *agencyServiceClient) DeleteAgency(ctx context.Context, in *DeleteAgencyRequest, opts ...grpc.CallOption) (*DeleteAgencyResponse, error) {
+func (c *agencyClient) DeleteAgency(ctx context.Context, in *DeleteAgencyRequest, opts ...grpc.CallOption) (*DeleteAgencyResponse, error) {
 	out := new(DeleteAgencyResponse)
-	err := c.cc.Invoke(ctx, "/AgencyService/DeleteAgency", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/Agency/DeleteAgency", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// AgencyServiceServer is the server API for AgencyService service.
-// All implementations must embed UnimplementedAgencyServiceServer
+// AgencyServer is the server API for Agency service.
+// All implementations must embed UnimplementedAgencyServer
 // for forward compatibility
-type AgencyServiceServer interface {
+type AgencyServer interface {
 	GetAgencies(context.Context, *GetAgenciesRequest) (*GetAgenciesResponse, error)
 	GetAgency(context.Context, *GetAgencyRequest) (*GetAgencyResponse, error)
 	CreateAgency(context.Context, *CreateAgencyRequest) (*CreateAgencyResponse, error)
 	UpdateAgency(context.Context, *UpdateAgencyRequest) (*UpdateAgencyResponse, error)
 	DeleteAgency(context.Context, *DeleteAgencyRequest) (*DeleteAgencyResponse, error)
-	mustEmbedUnimplementedAgencyServiceServer()
+	mustEmbedUnimplementedAgencyServer()
 }
 
-// UnimplementedAgencyServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedAgencyServiceServer struct {
+// UnimplementedAgencyServer must be embedded to have forward compatible implementations.
+type UnimplementedAgencyServer struct {
 }
 
-func (UnimplementedAgencyServiceServer) GetAgencies(context.Context, *GetAgenciesRequest) (*GetAgenciesResponse, error) {
+func (UnimplementedAgencyServer) GetAgencies(context.Context, *GetAgenciesRequest) (*GetAgenciesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAgencies not implemented")
 }
-func (UnimplementedAgencyServiceServer) GetAgency(context.Context, *GetAgencyRequest) (*GetAgencyResponse, error) {
+func (UnimplementedAgencyServer) GetAgency(context.Context, *GetAgencyRequest) (*GetAgencyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAgency not implemented")
 }
-func (UnimplementedAgencyServiceServer) CreateAgency(context.Context, *CreateAgencyRequest) (*CreateAgencyResponse, error) {
+func (UnimplementedAgencyServer) CreateAgency(context.Context, *CreateAgencyRequest) (*CreateAgencyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateAgency not implemented")
 }
-func (UnimplementedAgencyServiceServer) UpdateAgency(context.Context, *UpdateAgencyRequest) (*UpdateAgencyResponse, error) {
+func (UnimplementedAgencyServer) UpdateAgency(context.Context, *UpdateAgencyRequest) (*UpdateAgencyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateAgency not implemented")
 }
-func (UnimplementedAgencyServiceServer) DeleteAgency(context.Context, *DeleteAgencyRequest) (*DeleteAgencyResponse, error) {
+func (UnimplementedAgencyServer) DeleteAgency(context.Context, *DeleteAgencyRequest) (*DeleteAgencyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAgency not implemented")
 }
-func (UnimplementedAgencyServiceServer) mustEmbedUnimplementedAgencyServiceServer() {}
+func (UnimplementedAgencyServer) mustEmbedUnimplementedAgencyServer() {}
 
-// UnsafeAgencyServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to AgencyServiceServer will
+// UnsafeAgencyServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to AgencyServer will
 // result in compilation errors.
-type UnsafeAgencyServiceServer interface {
-	mustEmbedUnimplementedAgencyServiceServer()
+type UnsafeAgencyServer interface {
+	mustEmbedUnimplementedAgencyServer()
 }
 
-func RegisterAgencyServiceServer(s grpc.ServiceRegistrar, srv AgencyServiceServer) {
-	s.RegisterService(&AgencyService_ServiceDesc, srv)
+func RegisterAgencyServer(s grpc.ServiceRegistrar, srv AgencyServer) {
+	s.RegisterService(&Agency_ServiceDesc, srv)
 }
 
-func _AgencyService_GetAgencies_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Agency_GetAgencies_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetAgenciesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AgencyServiceServer).GetAgencies(ctx, in)
+		return srv.(AgencyServer).GetAgencies(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/AgencyService/GetAgencies",
+		FullMethod: "/Agency/GetAgencies",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AgencyServiceServer).GetAgencies(ctx, req.(*GetAgenciesRequest))
+		return srv.(AgencyServer).GetAgencies(ctx, req.(*GetAgenciesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AgencyService_GetAgency_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Agency_GetAgency_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetAgencyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AgencyServiceServer).GetAgency(ctx, in)
+		return srv.(AgencyServer).GetAgency(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/AgencyService/GetAgency",
+		FullMethod: "/Agency/GetAgency",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AgencyServiceServer).GetAgency(ctx, req.(*GetAgencyRequest))
+		return srv.(AgencyServer).GetAgency(ctx, req.(*GetAgencyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AgencyService_CreateAgency_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Agency_CreateAgency_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateAgencyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AgencyServiceServer).CreateAgency(ctx, in)
+		return srv.(AgencyServer).CreateAgency(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/AgencyService/CreateAgency",
+		FullMethod: "/Agency/CreateAgency",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AgencyServiceServer).CreateAgency(ctx, req.(*CreateAgencyRequest))
+		return srv.(AgencyServer).CreateAgency(ctx, req.(*CreateAgencyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AgencyService_UpdateAgency_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Agency_UpdateAgency_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateAgencyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AgencyServiceServer).UpdateAgency(ctx, in)
+		return srv.(AgencyServer).UpdateAgency(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/AgencyService/UpdateAgency",
+		FullMethod: "/Agency/UpdateAgency",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AgencyServiceServer).UpdateAgency(ctx, req.(*UpdateAgencyRequest))
+		return srv.(AgencyServer).UpdateAgency(ctx, req.(*UpdateAgencyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AgencyService_DeleteAgency_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Agency_DeleteAgency_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteAgencyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AgencyServiceServer).DeleteAgency(ctx, in)
+		return srv.(AgencyServer).DeleteAgency(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/AgencyService/DeleteAgency",
+		FullMethod: "/Agency/DeleteAgency",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AgencyServiceServer).DeleteAgency(ctx, req.(*DeleteAgencyRequest))
+		return srv.(AgencyServer).DeleteAgency(ctx, req.(*DeleteAgencyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// AgencyService_ServiceDesc is the grpc.ServiceDesc for AgencyService service.
+// Agency_ServiceDesc is the grpc.ServiceDesc for Agency service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var AgencyService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "AgencyService",
-	HandlerType: (*AgencyServiceServer)(nil),
+var Agency_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "Agency",
+	HandlerType: (*AgencyServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "GetAgencies",
-			Handler:    _AgencyService_GetAgencies_Handler,
+			Handler:    _Agency_GetAgencies_Handler,
 		},
 		{
 			MethodName: "GetAgency",
-			Handler:    _AgencyService_GetAgency_Handler,
+			Handler:    _Agency_GetAgency_Handler,
 		},
 		{
 			MethodName: "CreateAgency",
-			Handler:    _AgencyService_CreateAgency_Handler,
+			Handler:    _Agency_CreateAgency_Handler,
 		},
 		{
 			MethodName: "UpdateAgency",
-			Handler:    _AgencyService_UpdateAgency_Handler,
+			Handler:    _Agency_UpdateAgency_Handler,
 		},
 		{
 			MethodName: "DeleteAgency",
-			Handler:    _AgencyService_DeleteAgency_Handler,
+			Handler:    _Agency_DeleteAgency_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

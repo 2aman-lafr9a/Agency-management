@@ -11,12 +11,12 @@ import (
 
 type AgencyService struct {
 	useCase interfaces.AgencyInterface
-	pb.UnimplementedAgencyServiceServer
+	pb.UnimplementedAgencyServer
 }
 
 func NewServer(grpcServer *grpc.Server, usecase interfaces.UseCaseInterface) {
 	useGrpc := &AgencyService{useCase: usecase}
-	pb.RegisterAgencyServiceServer(grpcServer, useGrpc)
+	pb.RegisterAgencyServer(grpcServer, useGrpc)
 }
 
 func (srv *AgencyService) CreateAgency(ctx context.Context, req *pb.CreateAgencyRequest) (*pb.CreateAgencyResponse, error) {
@@ -115,9 +115,9 @@ func (srv *AgencyService) transformAgencyModelUpdate(agency models.Agency) *pb.U
 }
 
 func (srv *AgencyService) transformAgenciesModel(agencies []*models.Agency) *pb.GetAgenciesResponse {
-	var agenciesRPC []*pb.Agency
+	var agenciesRPC []*pb.AgencyItem
 	for _, agency := range agencies {
-		agenciesRPC = append(agenciesRPC, &pb.Agency{
+		agenciesRPC = append(agenciesRPC, &pb.AgencyItem{
 			Id:   agency.ID,
 			Name: agency.Name,
 		})
