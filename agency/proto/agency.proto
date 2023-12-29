@@ -1,7 +1,7 @@
 syntax = "proto3";
 option go_package = "./proto";
 
-service AgencyService {
+service Agency {
     rpc GetAgencies(GetAgenciesRequest) returns (GetAgenciesResponse);
     rpc GetAgency(GetAgencyRequest) returns (GetAgencyResponse);
     rpc CreateAgency(CreateAgencyRequest) returns (CreateAgencyResponse);
@@ -9,7 +9,7 @@ service AgencyService {
     rpc DeleteAgency(DeleteAgencyRequest) returns (DeleteAgencyResponse);
 }
 
-message Agency{
+message AgencyItem{
   string id = 1;
   string name = 2;
 }
@@ -18,7 +18,7 @@ message GetAgenciesRequest{
 }
 
 message GetAgenciesResponse{
-  repeated Agency agencies = 1;
+  repeated AgencyItem agencies = 1;
 }
 
 message GetAgencyRequest{

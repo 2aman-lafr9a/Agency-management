@@ -1,8 +1,15 @@
 syntax = "proto3";
-
 option go_package = "./proto";
 
-service OfferService {
+
+
+package org.example.apigateway.grpc;
+
+option java_outer_classname = "OfferOuterClass";
+option java_package = "org.example.apigateway.grpc";
+
+
+service Offer {
   rpc GetOffers(GetOffersRequest) returns (GetOffersResponse);
   rpc GetOffer(GetOfferRequest) returns (GetOfferResponse);
   rpc CreateOffer(CreateOfferRequest) returns (CreateOfferResponse);
@@ -10,7 +17,7 @@ service OfferService {
   rpc DeleteOffer(DeleteOfferRequest) returns (DeleteOfferResponse);
 }
 
-message Offer{
+message OfferItem{
   string id = 1;
   string name = 2;
   string agency_id = 3;
@@ -23,7 +30,7 @@ message GetOffersRequest{
 }
 
 message GetOffersResponse{
-  repeated Offer offers = 1;
+  repeated OfferItem offers = 1;
 }
 
 message GetOfferRequest{
