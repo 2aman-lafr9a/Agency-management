@@ -22,7 +22,7 @@ message OfferItem{
   string name = 2;
   string agency_id = 3;
   string description = 4;
-  string price = 5;
+  int32 price = 5;
   string date = 6;
 }
 
@@ -42,7 +42,7 @@ message GetOfferResponse{
   string name = 2;
   string agency_id = 3;
   string description = 4;
-  string price = 5;
+  int32 price = 5;
   string date = 6;
 }
 
@@ -50,7 +50,7 @@ message CreateOfferRequest{
   string name = 1;
   string agency_id = 2;
   string description = 3;
-  string price = 4;
+  int32 price = 4;
   string date = 5;
 }
 
@@ -59,7 +59,7 @@ message CreateOfferResponse{
   string name = 2;
   string agency_id = 3;
   string description = 4;
-  string price = 5;
+  int32 price = 5;
   string date = 6;
 }
 
@@ -68,7 +68,7 @@ message UpdateOfferRequest{
   string name = 2;
   string agency_id = 3;
   string description = 4;
-  string price = 5;
+  int32 price = 5;
   string date = 6;
 }
 
@@ -77,7 +77,7 @@ message UpdateOfferResponse{
   string name = 2;
   string agency_id = 3;
   string description = 4;
-  string price = 5;
+  int32 price = 5;
   string date = 6;
 }
 
@@ -90,6 +90,6 @@ message DeleteOfferResponse{
   string name = 2;
   string agency_id = 3;
   string description = 4;
-  string price = 5;
+  int32 price = 5;
   string date = 6;
 }

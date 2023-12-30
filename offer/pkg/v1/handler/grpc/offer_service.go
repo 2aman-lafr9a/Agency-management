@@ -11,12 +11,12 @@ import (
 
 type OfferService struct {
 	useCase interfaces.OfferInterface
-	pb.UnimplementedOfferServiceServer
+	pb.UnimplementedOfferServer
 }
 
 func NewServer2(grpcServer *grpc.Server, usecase interfaces.UseCaseInterface) {
 	useGrpc := &OfferService{useCase: usecase}
-	pb.RegisterOfferServiceServer(grpcServer, useGrpc)
+	pb.RegisterOfferServer(grpcServer, useGrpc)
 }
 
 func (srv *OfferService) CreateOffer(ctx context.Context, req *pb.CreateOfferRequest) (*pb.CreateOfferResponse, error) {
@@ -25,7 +25,7 @@ func (srv *OfferService) CreateOffer(ctx context.Context, req *pb.CreateOfferReq
 		return &pb.CreateOfferResponse{}, errors.New("name is required")
 	}
 	offer, _ := srv.useCase.Create2(data)
-	return (*pb.CreateOfferResponse)(srv.transformOfferModel(offer)), nil
+	return srv.transformOfferModel(offer), nil
 }
 
 func (srv *OfferService) GetOffer(ctx context.Context, req *pb.GetOfferRequest) (*pb.GetOfferResponse, error) {
@@ -101,9 +101,9 @@ func (srv *OfferService) transformOfferModel(offer models.Offer) *pb.CreateOffer
 }
 
 func (srv *OfferService) transformOffersModel(offers []*models.Offer) *pb.GetOffersResponse {
-	var offersRPC []*pb.Offer
+	var offersRPC []*pb.OfferItem
 	for _, offer := range offers {
-		offersRPC = append(offersRPC, &pb.Offer{
+		offersRPC = append(offersRPC, &pb.OfferItem{
 			Id:   offer.ID,
 			Name: offer.Name,
 		})
