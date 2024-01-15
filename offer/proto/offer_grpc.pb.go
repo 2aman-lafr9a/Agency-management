@@ -18,10 +18,10 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// OfferServiceClient is the client API for OfferService service.
+// OfferClient is the client API for Offer service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type OfferServiceClient interface {
+type OfferClient interface {
 	GetOffers(ctx context.Context, in *GetOffersRequest, opts ...grpc.CallOption) (*GetOffersResponse, error)
 	GetOffer(ctx context.Context, in *GetOfferRequest, opts ...grpc.CallOption) (*GetOfferResponse, error)
 	CreateOffer(ctx context.Context, in *CreateOfferRequest, opts ...grpc.CallOption) (*CreateOfferResponse, error)
@@ -29,219 +29,219 @@ type OfferServiceClient interface {
 	DeleteOffer(ctx context.Context, in *DeleteOfferRequest, opts ...grpc.CallOption) (*DeleteOfferResponse, error)
 }
 
-type offerServiceClient struct {
+type offerClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewOfferServiceClient(cc grpc.ClientConnInterface) OfferServiceClient {
-	return &offerServiceClient{cc}
+func NewOfferClient(cc grpc.ClientConnInterface) OfferClient {
+	return &offerClient{cc}
 }
 
-func (c *offerServiceClient) GetOffers(ctx context.Context, in *GetOffersRequest, opts ...grpc.CallOption) (*GetOffersResponse, error) {
+func (c *offerClient) GetOffers(ctx context.Context, in *GetOffersRequest, opts ...grpc.CallOption) (*GetOffersResponse, error) {
 	out := new(GetOffersResponse)
-	err := c.cc.Invoke(ctx, "/OfferService/GetOffers", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/org.example.apigateway.grpc.Offer/GetOffers", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *offerServiceClient) GetOffer(ctx context.Context, in *GetOfferRequest, opts ...grpc.CallOption) (*GetOfferResponse, error) {
+func (c *offerClient) GetOffer(ctx context.Context, in *GetOfferRequest, opts ...grpc.CallOption) (*GetOfferResponse, error) {
 	out := new(GetOfferResponse)
-	err := c.cc.Invoke(ctx, "/OfferService/GetOffer", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/org.example.apigateway.grpc.Offer/GetOffer", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *offerServiceClient) CreateOffer(ctx context.Context, in *CreateOfferRequest, opts ...grpc.CallOption) (*CreateOfferResponse, error) {
+func (c *offerClient) CreateOffer(ctx context.Context, in *CreateOfferRequest, opts ...grpc.CallOption) (*CreateOfferResponse, error) {
 	out := new(CreateOfferResponse)
-	err := c.cc.Invoke(ctx, "/OfferService/CreateOffer", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/org.example.apigateway.grpc.Offer/CreateOffer", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *offerServiceClient) UpdateOffer(ctx context.Context, in *UpdateOfferRequest, opts ...grpc.CallOption) (*UpdateOfferResponse, error) {
+func (c *offerClient) UpdateOffer(ctx context.Context, in *UpdateOfferRequest, opts ...grpc.CallOption) (*UpdateOfferResponse, error) {
 	out := new(UpdateOfferResponse)
-	err := c.cc.Invoke(ctx, "/OfferService/UpdateOffer", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/org.example.apigateway.grpc.Offer/UpdateOffer", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *offerServiceClient) DeleteOffer(ctx context.Context, in *DeleteOfferRequest, opts ...grpc.CallOption) (*DeleteOfferResponse, error) {
+func (c *offerClient) DeleteOffer(ctx context.Context, in *DeleteOfferRequest, opts ...grpc.CallOption) (*DeleteOfferResponse, error) {
 	out := new(DeleteOfferResponse)
-	err := c.cc.Invoke(ctx, "/OfferService/DeleteOffer", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/org.example.apigateway.grpc.Offer/DeleteOffer", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// OfferServiceServer is the server API for OfferService service.
-// All implementations must embed UnimplementedOfferServiceServer
+// OfferServer is the server API for Offer service.
+// All implementations must embed UnimplementedOfferServer
 // for forward compatibility
-type OfferServiceServer interface {
+type OfferServer interface {
 	GetOffers(context.Context, *GetOffersRequest) (*GetOffersResponse, error)
 	GetOffer(context.Context, *GetOfferRequest) (*GetOfferResponse, error)
 	CreateOffer(context.Context, *CreateOfferRequest) (*CreateOfferResponse, error)
 	UpdateOffer(context.Context, *UpdateOfferRequest) (*UpdateOfferResponse, error)
 	DeleteOffer(context.Context, *DeleteOfferRequest) (*DeleteOfferResponse, error)
-	mustEmbedUnimplementedOfferServiceServer()
+	mustEmbedUnimplementedOfferServer()
 }
 
-// UnimplementedOfferServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedOfferServiceServer struct {
+// UnimplementedOfferServer must be embedded to have forward compatible implementations.
+type UnimplementedOfferServer struct {
 }
 
-func (UnimplementedOfferServiceServer) GetOffers(context.Context, *GetOffersRequest) (*GetOffersResponse, error) {
+func (UnimplementedOfferServer) GetOffers(context.Context, *GetOffersRequest) (*GetOffersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOffers not implemented")
 }
-func (UnimplementedOfferServiceServer) GetOffer(context.Context, *GetOfferRequest) (*GetOfferResponse, error) {
+func (UnimplementedOfferServer) GetOffer(context.Context, *GetOfferRequest) (*GetOfferResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOffer not implemented")
 }
-func (UnimplementedOfferServiceServer) CreateOffer(context.Context, *CreateOfferRequest) (*CreateOfferResponse, error) {
+func (UnimplementedOfferServer) CreateOffer(context.Context, *CreateOfferRequest) (*CreateOfferResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateOffer not implemented")
 }
-func (UnimplementedOfferServiceServer) UpdateOffer(context.Context, *UpdateOfferRequest) (*UpdateOfferResponse, error) {
+func (UnimplementedOfferServer) UpdateOffer(context.Context, *UpdateOfferRequest) (*UpdateOfferResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateOffer not implemented")
 }
-func (UnimplementedOfferServiceServer) DeleteOffer(context.Context, *DeleteOfferRequest) (*DeleteOfferResponse, error) {
+func (UnimplementedOfferServer) DeleteOffer(context.Context, *DeleteOfferRequest) (*DeleteOfferResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteOffer not implemented")
 }
-func (UnimplementedOfferServiceServer) mustEmbedUnimplementedOfferServiceServer() {}
+func (UnimplementedOfferServer) mustEmbedUnimplementedOfferServer() {}
 
-// UnsafeOfferServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to OfferServiceServer will
+// UnsafeOfferServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to OfferServer will
 // result in compilation errors.
-type UnsafeOfferServiceServer interface {
-	mustEmbedUnimplementedOfferServiceServer()
+type UnsafeOfferServer interface {
+	mustEmbedUnimplementedOfferServer()
 }
 
-func RegisterOfferServiceServer(s grpc.ServiceRegistrar, srv OfferServiceServer) {
-	s.RegisterService(&OfferService_ServiceDesc, srv)
+func RegisterOfferServer(s grpc.ServiceRegistrar, srv OfferServer) {
+	s.RegisterService(&Offer_ServiceDesc, srv)
 }
 
-func _OfferService_GetOffers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Offer_GetOffers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetOffersRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OfferServiceServer).GetOffers(ctx, in)
+		return srv.(OfferServer).GetOffers(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/OfferService/GetOffers",
+		FullMethod: "/org.example.apigateway.grpc.Offer/GetOffers",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OfferServiceServer).GetOffers(ctx, req.(*GetOffersRequest))
+		return srv.(OfferServer).GetOffers(ctx, req.(*GetOffersRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _OfferService_GetOffer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Offer_GetOffer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetOfferRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OfferServiceServer).GetOffer(ctx, in)
+		return srv.(OfferServer).GetOffer(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/OfferService/GetOffer",
+		FullMethod: "/org.example.apigateway.grpc.Offer/GetOffer",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OfferServiceServer).GetOffer(ctx, req.(*GetOfferRequest))
+		return srv.(OfferServer).GetOffer(ctx, req.(*GetOfferRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _OfferService_CreateOffer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Offer_CreateOffer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateOfferRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OfferServiceServer).CreateOffer(ctx, in)
+		return srv.(OfferServer).CreateOffer(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/OfferService/CreateOffer",
+		FullMethod: "/org.example.apigateway.grpc.Offer/CreateOffer",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OfferServiceServer).CreateOffer(ctx, req.(*CreateOfferRequest))
+		return srv.(OfferServer).CreateOffer(ctx, req.(*CreateOfferRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _OfferService_UpdateOffer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Offer_UpdateOffer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateOfferRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OfferServiceServer).UpdateOffer(ctx, in)
+		return srv.(OfferServer).UpdateOffer(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/OfferService/UpdateOffer",
+		FullMethod: "/org.example.apigateway.grpc.Offer/UpdateOffer",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OfferServiceServer).UpdateOffer(ctx, req.(*UpdateOfferRequest))
+		return srv.(OfferServer).UpdateOffer(ctx, req.(*UpdateOfferRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _OfferService_DeleteOffer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Offer_DeleteOffer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteOfferRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OfferServiceServer).DeleteOffer(ctx, in)
+		return srv.(OfferServer).DeleteOffer(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/OfferService/DeleteOffer",
+		FullMethod: "/org.example.apigateway.grpc.Offer/DeleteOffer",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OfferServiceServer).DeleteOffer(ctx, req.(*DeleteOfferRequest))
+		return srv.(OfferServer).DeleteOffer(ctx, req.(*DeleteOfferRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// OfferService_ServiceDesc is the grpc.ServiceDesc for OfferService service.
+// Offer_ServiceDesc is the grpc.ServiceDesc for Offer service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var OfferService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "OfferService",
-	HandlerType: (*OfferServiceServer)(nil),
+var Offer_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "org.example.apigateway.grpc.Offer",
+	HandlerType: (*OfferServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "GetOffers",
-			Handler:    _OfferService_GetOffers_Handler,
+			Handler:    _Offer_GetOffers_Handler,
 		},
 		{
 			MethodName: "GetOffer",
-			Handler:    _OfferService_GetOffer_Handler,
+			Handler:    _Offer_GetOffer_Handler,
 		},
 		{
 			MethodName: "CreateOffer",
-			Handler:    _OfferService_CreateOffer_Handler,
+			Handler:    _Offer_CreateOffer_Handler,
 		},
 		{
 			MethodName: "UpdateOffer",
-			Handler:    _OfferService_UpdateOffer_Handler,
+			Handler:    _Offer_UpdateOffer_Handler,
 		},
 		{
 			MethodName: "DeleteOffer",
-			Handler:    _OfferService_DeleteOffer_Handler,
+			Handler:    _Offer_DeleteOffer_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
