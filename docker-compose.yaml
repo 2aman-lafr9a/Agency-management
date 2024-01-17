@@ -25,6 +25,8 @@ services:
       DB_HOST: postgres_container
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
+    networks:
+      - aman_network
   offer_management:
     build:
       context: ./offer
@@ -37,7 +39,11 @@ services:
       DB_HOST: postgres_container
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
+    networks:
+      - aman_network
 
 
-
-
+networks:
+  aman_network:
+    driver: bridge
+    external: true
