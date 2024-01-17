@@ -3,10 +3,10 @@ option go_package = "./proto";
 
 
 
-package org.example.apigateway.grpc;
+package offer;
 
 option java_outer_classname = "OfferOuterClass";
-option java_package = "org.example.apigateway.grpc";
+option java_package = "org.example.apigateway.grpc.offer";
 
 
 service Offer {

@@ -39,7 +39,7 @@ func NewOfferClient(cc grpc.ClientConnInterface) OfferClient {
 
 func (c *offerClient) GetOffers(ctx context.Context, in *GetOffersRequest, opts ...grpc.CallOption) (*GetOffersResponse, error) {
 	out := new(GetOffersResponse)
-	err := c.cc.Invoke(ctx, "/org.example.apigateway.grpc.Offer/GetOffers", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/offer.Offer/GetOffers", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -48,7 +48,7 @@ func (c *offerClient) GetOffers(ctx context.Context, in *GetOffersRequest, opts 
 
 func (c *offerClient) GetOffer(ctx context.Context, in *GetOfferRequest, opts ...grpc.CallOption) (*GetOfferResponse, error) {
 	out := new(GetOfferResponse)
-	err := c.cc.Invoke(ctx, "/org.example.apigateway.grpc.Offer/GetOffer", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/offer.Offer/GetOffer", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -57,7 +57,7 @@ func (c *offerClient) GetOffer(ctx context.Context, in *GetOfferRequest, opts ..
 
 func (c *offerClient) CreateOffer(ctx context.Context, in *CreateOfferRequest, opts ...grpc.CallOption) (*CreateOfferResponse, error) {
 	out := new(CreateOfferResponse)
-	err := c.cc.Invoke(ctx, "/org.example.apigateway.grpc.Offer/CreateOffer", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/offer.Offer/CreateOffer", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -66,7 +66,7 @@ func (c *offerClient) CreateOffer(ctx context.Context, in *CreateOfferRequest, o
 
 func (c *offerClient) UpdateOffer(ctx context.Context, in *UpdateOfferRequest, opts ...grpc.CallOption) (*UpdateOfferResponse, error) {
 	out := new(UpdateOfferResponse)
-	err := c.cc.Invoke(ctx, "/org.example.apigateway.grpc.Offer/UpdateOffer", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/offer.Offer/UpdateOffer", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -75,7 +75,7 @@ func (c *offerClient) UpdateOffer(ctx context.Context, in *UpdateOfferRequest, o
 
 func (c *offerClient) DeleteOffer(ctx context.Context, in *DeleteOfferRequest, opts ...grpc.CallOption) (*DeleteOfferResponse, error) {
 	out := new(DeleteOfferResponse)
-	err := c.cc.Invoke(ctx, "/org.example.apigateway.grpc.Offer/DeleteOffer", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/offer.Offer/DeleteOffer", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -136,7 +136,7 @@ func _Offer_GetOffers_Handler(srv interface{}, ctx context.Context, dec func(int
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/org.example.apigateway.grpc.Offer/GetOffers",
+		FullMethod: "/offer.Offer/GetOffers",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OfferServer).GetOffers(ctx, req.(*GetOffersRequest))
@@ -154,7 +154,7 @@ func _Offer_GetOffer_Handler(srv interface{}, ctx context.Context, dec func(inte
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/org.example.apigateway.grpc.Offer/GetOffer",
+		FullMethod: "/offer.Offer/GetOffer",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OfferServer).GetOffer(ctx, req.(*GetOfferRequest))
@@ -172,7 +172,7 @@ func _Offer_CreateOffer_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/org.example.apigateway.grpc.Offer/CreateOffer",
+		FullMethod: "/offer.Offer/CreateOffer",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OfferServer).CreateOffer(ctx, req.(*CreateOfferRequest))
@@ -190,7 +190,7 @@ func _Offer_UpdateOffer_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/org.example.apigateway.grpc.Offer/UpdateOffer",
+		FullMethod: "/offer.Offer/UpdateOffer",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OfferServer).UpdateOffer(ctx, req.(*UpdateOfferRequest))
@@ -208,7 +208,7 @@ func _Offer_DeleteOffer_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/org.example.apigateway.grpc.Offer/DeleteOffer",
+		FullMethod: "/offer.Offer/DeleteOffer",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OfferServer).DeleteOffer(ctx, req.(*DeleteOfferRequest))
@@ -220,7 +220,7 @@ func _Offer_DeleteOffer_Handler(srv interface{}, ctx context.Context, dec func(i
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Offer_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "org.example.apigateway.grpc.Offer",
+	ServiceName: "offer.Offer",
 	HandlerType: (*OfferServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
