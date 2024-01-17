@@ -39,7 +39,7 @@ func NewAgencyClient(cc grpc.ClientConnInterface) AgencyClient {
 
 func (c *agencyClient) GetAgencies(ctx context.Context, in *GetAgenciesRequest, opts ...grpc.CallOption) (*GetAgenciesResponse, error) {
 	out := new(GetAgenciesResponse)
-	err := c.cc.Invoke(ctx, "/Agency/GetAgencies", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/agency.Agency/GetAgencies", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -48,7 +48,7 @@ func (c *agencyClient) GetAgencies(ctx context.Context, in *GetAgenciesRequest, 
 
 func (c *agencyClient) GetAgency(ctx context.Context, in *GetAgencyRequest, opts ...grpc.CallOption) (*GetAgencyResponse, error) {
 	out := new(GetAgencyResponse)
-	err := c.cc.Invoke(ctx, "/Agency/GetAgency", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/agency.Agency/GetAgency", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -57,7 +57,7 @@ func (c *agencyClient) GetAgency(ctx context.Context, in *GetAgencyRequest, opts
 
 func (c *agencyClient) CreateAgency(ctx context.Context, in *CreateAgencyRequest, opts ...grpc.CallOption) (*CreateAgencyResponse, error) {
 	out := new(CreateAgencyResponse)
-	err := c.cc.Invoke(ctx, "/Agency/CreateAgency", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/agency.Agency/CreateAgency", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -66,7 +66,7 @@ func (c *agencyClient) CreateAgency(ctx context.Context, in *CreateAgencyRequest
 
 func (c *agencyClient) UpdateAgency(ctx context.Context, in *UpdateAgencyRequest, opts ...grpc.CallOption) (*UpdateAgencyResponse, error) {
 	out := new(UpdateAgencyResponse)
-	err := c.cc.Invoke(ctx, "/Agency/UpdateAgency", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/agency.Agency/UpdateAgency", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -75,7 +75,7 @@ func (c *agencyClient) UpdateAgency(ctx context.Context, in *UpdateAgencyRequest
 
 func (c *agencyClient) DeleteAgency(ctx context.Context, in *DeleteAgencyRequest, opts ...grpc.CallOption) (*DeleteAgencyResponse, error) {
 	out := new(DeleteAgencyResponse)
-	err := c.cc.Invoke(ctx, "/Agency/DeleteAgency", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/agency.Agency/DeleteAgency", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -136,7 +136,7 @@ func _Agency_GetAgencies_Handler(srv interface{}, ctx context.Context, dec func(
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/Agency/GetAgencies",
+		FullMethod: "/agency.Agency/GetAgencies",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AgencyServer).GetAgencies(ctx, req.(*GetAgenciesRequest))
@@ -154,7 +154,7 @@ func _Agency_GetAgency_Handler(srv interface{}, ctx context.Context, dec func(in
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/Agency/GetAgency",
+		FullMethod: "/agency.Agency/GetAgency",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AgencyServer).GetAgency(ctx, req.(*GetAgencyRequest))
@@ -172,7 +172,7 @@ func _Agency_CreateAgency_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/Agency/CreateAgency",
+		FullMethod: "/agency.Agency/CreateAgency",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AgencyServer).CreateAgency(ctx, req.(*CreateAgencyRequest))
@@ -190,7 +190,7 @@ func _Agency_UpdateAgency_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/Agency/UpdateAgency",
+		FullMethod: "/agency.Agency/UpdateAgency",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AgencyServer).UpdateAgency(ctx, req.(*UpdateAgencyRequest))
@@ -208,7 +208,7 @@ func _Agency_DeleteAgency_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/Agency/DeleteAgency",
+		FullMethod: "/agency.Agency/DeleteAgency",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AgencyServer).DeleteAgency(ctx, req.(*DeleteAgencyRequest))
@@ -220,7 +220,7 @@ func _Agency_DeleteAgency_Handler(srv interface{}, ctx context.Context, dec func
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Agency_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "Agency",
+	ServiceName: "agency.Agency",
 	HandlerType: (*AgencyServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

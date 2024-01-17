@@ -7,7 +7,7 @@ type Agency struct {
 
 	ID          string `gorm:"primaryKey;type:varchar(255);not null;unique;autoIncrement:true"`
 	Name        string `gorm:"type:varchar(255);not null;unique"`
-	Description string `gorm:"type:varchar(255);unique"`
+	Description string `gorm:"type:varchar(255)"`
 }
 
 func (a Agency) Error() string {
