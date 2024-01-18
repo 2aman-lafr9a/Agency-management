@@ -11,7 +11,7 @@ type Offer struct {
 	Description string    `gorm:"type:varchar(255);not null"`
 	Price       float64   `gorm:"type:float;not null"`
 	Date        string    `gorm:"type:varchar(255);not null"`
-	AgencyID    string    `gorm:"type:varchar(255);not null;references:agencies"`
+	AgencyID    string    `gorm:"type:varchar(255);not null"`
 	Rating      int32     `gorm:"type:int;not null;default:0"`
 	OfferType   OfferType `gorm:"type:int;not null;default:0"`
 }
