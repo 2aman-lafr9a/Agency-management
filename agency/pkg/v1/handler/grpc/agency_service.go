@@ -24,6 +24,12 @@ func (srv *AgencyService) CreateAgency(ctx context.Context, req *pb.CreateAgency
 	if data.Name == "" {
 		return &pb.CreateAgencyResponse{}, errors.New("name is required")
 	}
+	if data.Plan == "" {
+		return &pb.CreateAgencyResponse{}, errors.New("plan is required")
+	}
+	if data.Description == "" {
+		return &pb.CreateAgencyResponse{}, errors.New("description is required")
+	}
 	agency, err := srv.useCase.Create(data)
 	return srv.transformAgencyModel(agency), err
 }
@@ -55,6 +61,8 @@ func (srv *AgencyService) UpdateAgency(ctx context.Context, req *pb.UpdateAgency
 	}
 	agency, err := srv.useCase.FindById(data.ID)
 	agency.Name = data.Name
+	agency.Plan = data.Plan
+	agency.Description = data.Description
 	_ = srv.useCase.Update(agency)
 	return srv.transformAgencyModelUpdate(*agency), err
 }
@@ -71,7 +79,9 @@ func (srv *AgencyService) DeleteAgency(ctx context.Context, req *pb.DeleteAgency
 
 func (srv *AgencyService) transformAgencyRPC(req *pb.CreateAgencyRequest) *models.Agency {
 	return &models.Agency{
-		Name: req.GetName(),
+		Name:        req.GetName(),
+		Description: req.GetDescription(),
+		Plan:        req.GetPlan(),
 	}
 }
 
@@ -83,8 +93,10 @@ func (srv *AgencyService) transformAgencyRPCGet(req *pb.GetAgencyRequest) *model
 
 func (srv *AgencyService) transformAgencyRPCUpdate(req *pb.UpdateAgencyRequest) *models.Agency {
 	return &models.Agency{
-		ID:   req.GetId(),
-		Name: req.GetName(),
+		ID:          req.GetId(),
+		Name:        req.GetName(),
+		Description: req.GetDescription(),
+		Plan:        req.GetPlan(),
 	}
 }
 
@@ -96,30 +108,84 @@ func (srv *AgencyService) transformAgencyRPCDelete(req *pb.DeleteAgencyRequest) 
 
 func (srv *AgencyService) transformAgencyModel(agency models.Agency) *pb.CreateAgencyResponse {
 	return &pb.CreateAgencyResponse{
-		Name: agency.Name,
+		Name:        agency.Name,
+		Description: agency.Description,
+		Plan:        agency.Plan,
 	}
 }
 
 func (srv *AgencyService) transformAgencyModelGet(agency models.Agency) *pb.GetAgencyResponse {
+	if agency.Offers == nil {
+		return &pb.GetAgencyResponse{
+			Id:          agency.ID,
+			Name:        agency.Name,
+			Description: agency.Description,
+			Plan:        agency.Plan,
+			Offers:      nil,
+		}
+	}
+	var offers []*pb.OfferItem
+	for _, offer := range agency.Offers {
+		offerToOfferItem(offer)
+		offers = append(offers, offerToOfferItem(offer))
+	}
 	return &pb.GetAgencyResponse{
-		Id:   agency.ID,
-		Name: agency.Name,
+		Id:          agency.ID,
+		Name:        agency.Name,
+		Description: agency.Description,
+		Plan:        agency.Plan,
+		Offers:      offers,
 	}
 }
 
 func (srv *AgencyService) transformAgencyModelUpdate(agency models.Agency) *pb.UpdateAgencyResponse {
+	if agency.Offers == nil {
+		return &pb.UpdateAgencyResponse{
+			Id:          agency.ID,
+			Name:        agency.Name,
+			Description: agency.Description,
+			Plan:        agency.Plan,
+			Offers:      nil,
+		}
+	}
+	var offers []*pb.OfferItem
+	for _, offer := range agency.Offers {
+		offerToOfferItem(offer)
+		offers = append(offers, offerToOfferItem(offer))
+	}
 	return &pb.UpdateAgencyResponse{
-		Id:   agency.ID,
-		Name: agency.Name,
+		Id:          agency.ID,
+		Name:        agency.Name,
+		Description: agency.Description,
+		Plan:        agency.Plan,
+		Offers:      offers,
 	}
 }
 
 func (srv *AgencyService) transformAgenciesModel(agencies []*models.Agency) *pb.GetAgenciesResponse {
 	var agenciesRPC []*pb.AgencyItem
 	for _, agency := range agencies {
+		if agency.Offers == nil {
+			agenciesRPC = append(agenciesRPC, &pb.AgencyItem{
+				Id:          agency.ID,
+				Name:        agency.Name,
+				Description: agency.Description,
+				Plan:        agency.Plan,
+				Offers:      nil,
+			})
+			continue
+		}
+		var offers []*pb.OfferItem
+		for _, offer := range agency.Offers {
+			offerToOfferItem(offer)
+			offers = append(offers, offerToOfferItem(offer))
+		}
 		agenciesRPC = append(agenciesRPC, &pb.AgencyItem{
-			Id:   agency.ID,
-			Name: agency.Name,
+			Id:          agency.ID,
+			Name:        agency.Name,
+			Description: agency.Description,
+			Plan:        agency.Plan,
+			Offers:      offers,
 		})
 	}
 	return &pb.GetAgenciesResponse{
@@ -128,7 +194,36 @@ func (srv *AgencyService) transformAgenciesModel(agencies []*models.Agency) *pb.
 }
 
 func (srv *AgencyService) transformAgencyModelDelete(agency models.Agency) *pb.DeleteAgencyResponse {
+	if agency.Offers == nil {
+		return &pb.DeleteAgencyResponse{
+			Id:          agency.ID,
+			Description: agency.Description,
+			Plan:        agency.Plan,
+			Name:        agency.Name,
+			Offers:      nil,
+		}
+	}
+	var offers []*pb.OfferItem
+	for _, offer := range agency.Offers {
+		offerToOfferItem(offer)
+		offers = append(offers, offerToOfferItem(offer))
+	}
 	return &pb.DeleteAgencyResponse{
-		Id: agency.ID,
+		Id:          agency.ID,
+		Description: agency.Description,
+		Plan:        agency.Plan,
+		Name:        agency.Name,
+		Offers:      offers,
+	}
+}
+
+func offerToOfferItem(offer models.Offer) *pb.OfferItem {
+	return &pb.OfferItem{
+		Id:          offer.ID,
+		Name:        offer.Name,
+		Description: offer.Description,
+		Price:       int32(offer.Price),
+		Date:        offer.Date,
+		AgencyId:    offer.AgencyID,
 	}
 }
