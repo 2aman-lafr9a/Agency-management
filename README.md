@@ -11,15 +11,6 @@ docker run --name postgres  \
     -p 5432:5432 -d postgres
 ```
 
-# to create a container
-
-```shell
-docker run -p 8080:8080 -it -d --name agency-management-container agency-management
-```
-
-```shell
-
-```
 
 ### using docker composer 
 or better you can use this command that will create all for you 
