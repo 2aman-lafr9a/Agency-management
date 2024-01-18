@@ -85,8 +85,17 @@ message DeleteAgencyResponse{
 message OfferItem{
   string id = 1;
   string name = 2;
-  string agency_id = 3;
+  AgencyItem agency_id = 3;
   string description = 4;
   int32 price = 5;
   string date = 6;
+  int32 rating = 7;
+  OfferType type = 8;
+}
+
+enum  OfferType {
+  Normal = 0;
+  Special = 1;
+  Important = 2;
+  Ultimate = 3;
 }

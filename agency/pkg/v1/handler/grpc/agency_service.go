@@ -224,6 +224,7 @@ func offerToOfferItem(offer models.Offer) *pb.OfferItem {
 		Description: offer.Description,
 		Price:       int32(offer.Price),
 		Date:        offer.Date,
-		AgencyId:    offer.AgencyID,
+		Rating:      offer.Rating,
+		Type:        pb.OfferType(offer.OfferType),
 	}
 }

@@ -18,7 +18,7 @@ func TestCreateAgency(t *testing.T) {
 	client := pb.NewAgencyServiceClient(conn)
 
 	request := &pb.CreateAgencyRequest{
-		Name: "Agency 1",
+		Name: "AgencyID 1",
 	}
 
 	res, err := client.CreateAgency(context.Background(), request)
@@ -27,7 +27,7 @@ func TestCreateAgency(t *testing.T) {
 		t.Fatalf("Error when calling CreateAgency: %s", err)
 	}
 
-	if res.Name != "Agency 1" {
+	if res.Name != "AgencyID 1" {
 		t.Fatalf("Expected name to be %s, got %s", request.Name, res.Name)
 	}
 }
@@ -42,7 +42,7 @@ func TestGetAgency(t *testing.T) {
 	client := pb.NewAgencyServiceClient(conn)
 
 	request := &pb.GetAgencyRequest{
-		Name: "Agency 1",
+		Name: "AgencyID 1",
 	}
 
 	res, err := client.GetAgency(context.Background(), request)
@@ -51,7 +51,7 @@ func TestGetAgency(t *testing.T) {
 		t.Fatalf("Error when calling GetAgency: %s", err)
 	}
 
-	if res.Name != "Agency 1" {
+	if res.Name != "AgencyID 1" {
 		t.Fatalf("Expected name to be %s, got %s", request.Name, res.Name)
 	}
 }
@@ -88,7 +88,7 @@ func TestUpdateAgency(t *testing.T) {
 	client := pb.NewAgencyServiceClient(conn)
 
 	request := &pb.UpdateAgencyRequest{
-		Name: "Agency 1",
+		Name: "AgencyID 1",
 	}
 
 	res, err := client.UpdateAgency(context.Background(), request)
@@ -97,7 +97,7 @@ func TestUpdateAgency(t *testing.T) {
 		t.Fatalf("Error when calling UpdateAgency: %s", err)
 	}
 
-	if res.Name != "Agency 1" {
+	if res.Name != "AgencyID 1" {
 		t.Fatalf("Expected name to be %s, got %s", request.Name, res.Name)
 	}
 }

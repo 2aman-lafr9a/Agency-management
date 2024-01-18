@@ -21,6 +21,10 @@ func NewServer2(grpcServer *grpc.Server, usecase interfaces.UseCaseInterface) {
 
 func (srv *OfferService) CreateOffer(ctx context.Context, req *pb.CreateOfferRequest) (*pb.CreateOfferResponse, error) {
 	data := srv.transformOfferRPC(req)
+	_, err := srv.useCase.FindAgencyByID(data.AgencyID)
+	if err != nil {
+		return &pb.CreateOfferResponse{}, errors.New("agency not found")
+	}
 	if data.Name == "" {
 		return &pb.CreateOfferResponse{}, errors.New("name is required")
 	}
@@ -37,7 +41,7 @@ func (srv *OfferService) GetOffer(ctx context.Context, req *pb.GetOfferRequest) 
 	if offer == nil {
 		return &pb.GetOfferResponse{}, errors.New("offer not found")
 	}
-	return (*pb.GetOfferResponse)(srv.transformOfferModel(*offer)), err
+	return srv.transformOfferModelGet(*offer), err
 }
 
 func (srv *OfferService) GetOffers(ctx context.Context, req *pb.GetOffersRequest) (*pb.GetOffersResponse, error) {
@@ -56,7 +60,7 @@ func (srv *OfferService) UpdateOffer(ctx context.Context, req *pb.UpdateOfferReq
 	offer, _ := srv.useCase.FindByName2(data.Name)
 	offer.Name = data.Name
 	_ = srv.useCase.Update2(offer)
-	return (*pb.UpdateOfferResponse)(srv.transformOfferModel(*offer)), nil
+	return (*pb.UpdateOfferResponse)(srv.transformOfferModelGet(*offer)), nil
 }
 
 func (srv *OfferService) DeleteOffer(ctx context.Context, req *pb.DeleteOfferRequest) (*pb.DeleteOfferResponse, error) {
@@ -71,7 +75,12 @@ func (srv *OfferService) DeleteOffer(ctx context.Context, req *pb.DeleteOfferReq
 
 func (srv *OfferService) transformOfferRPC(req *pb.CreateOfferRequest) *models.Offer {
 	return &models.Offer{
-		Name: req.GetName(),
+		Name:        req.GetName(),
+		Description: req.GetDescription(),
+		Price:       float64(req.GetPrice()),
+		Date:        req.GetDate(),
+		AgencyID:    req.GetAgencyID(),
+		OfferType:   models.OfferType(req.GetType()),
 	}
 }
 
@@ -83,7 +92,12 @@ func (srv *OfferService) transformOfferRPCGet(req *pb.GetOfferRequest) *models.O
 
 func (srv *OfferService) transformOfferRPCUpdate(req *pb.UpdateOfferRequest) *models.Offer {
 	return &models.Offer{
-		Name: req.GetName(),
+		Name:        req.GetName(),
+		Description: req.GetDescription(),
+		Price:       float64(req.GetPrice()),
+		Date:        req.GetDate(),
+		Rating:      req.GetRating(),
+		OfferType:   models.OfferType(req.GetType()),
 	}
 }
 
@@ -95,8 +109,24 @@ func (srv *OfferService) transformOfferRPCDelete(req *pb.DeleteOfferRequest) *mo
 
 func (srv *OfferService) transformOfferModel(offer models.Offer) *pb.CreateOfferResponse {
 	return &pb.CreateOfferResponse{
-		Id:   offer.ID,
-		Name: offer.Name,
+		Id:          offer.ID,
+		Name:        offer.Name,
+		Description: offer.Description,
+		Price:       int32(offer.Price),
+		Date:        offer.Date,
+		Type:        pb.OfferType(offer.OfferType),
+	}
+}
+
+func (srv *OfferService) transformOfferModelGet(offer models.Offer) *pb.GetOfferResponse {
+	return &pb.GetOfferResponse{
+		Id:          offer.ID,
+		Name:        offer.Name,
+		Description: offer.Description,
+		Price:       int32(offer.Price),
+		Date:        offer.Date,
+		Rating:      offer.Rating,
+		Type:        pb.OfferType(offer.OfferType),
 	}
 }
 
@@ -104,8 +134,13 @@ func (srv *OfferService) transformOffersModel(offers []*models.Offer) *pb.GetOff
 	var offersRPC []*pb.OfferItem
 	for _, offer := range offers {
 		offersRPC = append(offersRPC, &pb.OfferItem{
-			Id:   offer.ID,
-			Name: offer.Name,
+			Id:          offer.ID,
+			Name:        offer.Name,
+			Description: offer.Description,
+			Price:       int32(offer.Price),
+			Date:        offer.Date,
+			Rating:      offer.Rating,
+			Type:        pb.OfferType(offer.OfferType),
 		})
 	}
 	return &pb.GetOffersResponse{
