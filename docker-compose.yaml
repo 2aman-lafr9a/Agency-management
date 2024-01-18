@@ -1,9 +1,9 @@
 version: '3'
 
 services:
-  postgres_container:
+  agency_offers_database:
     image: postgres
-    container_name: postgres
+    container_name: agency_offers_database
     ports:
       - "5432:5432"
     environment:
@@ -13,6 +13,8 @@ services:
     volumes:
       - /var/lib/postgresql/data
     restart: always
+    networks:
+      - aman_network
   agency_management:
     build:
       context: ./agency
@@ -20,9 +22,9 @@ services:
       - "50001:50001"
     restart: always
     depends_on:
-      - postgres_container
+      - agency_offers_database
     environment:
-      DB_HOST: postgres_container
+      DB_HOST: agency_offers_database
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
     networks:
@@ -34,9 +36,9 @@ services:
       - "50002:50002"
     restart: always
     depends_on:
-      - postgres_container
+      - agency_offers_database
     environment:
-      DB_HOST: postgres_container
+      DB_HOST: agency_offers_database
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
     networks:
