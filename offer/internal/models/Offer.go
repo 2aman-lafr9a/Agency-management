@@ -8,10 +8,10 @@ import (
 type Offer struct {
 	ID          string    `gorm:"primaryKey;type:varchar(255);unique;autoIncrement:true"`
 	Name        string    `gorm:"type:varchar(255);not null;unique"`
-	Description string    `gorm:"type:varchar(255);not null;unique"`
-	Price       float64   `gorm:"type:float;not null;unique"`
-	Date        string    `gorm:"type:varchar(255);not null;unique"`
-	AgencyID    string    `gorm:"type:varchar(255);not null;unique;references:agencies"`
+	Description string    `gorm:"type:varchar(255);not null"`
+	Price       float64   `gorm:"type:float;not null"`
+	Date        string    `gorm:"type:varchar(255);not null"`
+	AgencyID    string    `gorm:"type:varchar(255);not null;references:agencies"`
 	Rating      int32     `gorm:"type:int;not null;default:0"`
 	OfferType   OfferType `gorm:"type:int;not null;default:0"`
 }
