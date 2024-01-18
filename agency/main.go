@@ -38,8 +38,9 @@ func initUserServer(db *gorm.DB) interfaces.UseCaseInterface {
 }
 
 func migrations(db *gorm.DB) {
-	err := db.AutoMigrate(&models.Agency{})
-	if err != nil {
+	err := db.Migrator().DropTable(&models.Agency{}, &models.Offer{})
+	err1 := db.AutoMigrate(&models.Agency{}, &models.Offer{})
+	if err != nil || err1 != nil {
 		fmt.Println(err)
 	} else {
 		fmt.Println("Migration did run successfully")
