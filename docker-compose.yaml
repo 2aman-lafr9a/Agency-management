@@ -14,7 +14,7 @@ services:
       - /var/lib/postgresql/data
     restart: always
     networks:
-      - internal_agency_offer_network
+      - aman_network
   agency_management:
     build:
       context: ./agency
@@ -28,7 +28,7 @@ services:
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
     networks:
-      - internal_agency_offer_network
+      - aman_network
   offer_management:
     build:
       context: ./offer
@@ -43,12 +43,9 @@ services:
       DB_PASSWORD: postgres
     networks:
       - aman_network
-      - internal_agency_offer_network
 
 
 networks:
   aman_network:
     driver: bridge
     external: true
-  internal_agency_offer_network:
-    internal: true
