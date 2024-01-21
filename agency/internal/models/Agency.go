@@ -2,7 +2,19 @@ package models
 
 import (
 	"gorm.io/gorm"
+	_ "gorm.io/gorm"
 )
+
+type Offer struct {
+	ID          string    `gorm:"primaryKey;type:varchar(255);unique;autoIncrement:true"`
+	Name        string    `gorm:"type:varchar(255);not null;unique"`
+	Description string    `gorm:"type:varchar(255);not null"`
+	Price       float64   `gorm:"type:float;not null"`
+	Date        string    `gorm:"type:varchar(255);not null"`
+	AgencyID    string    `gorm:"type:varchar(255);not null"`
+	Rating      int32     `gorm:"type:int;not null;default:0"`
+	OfferType   OfferType `gorm:"type:int;not null;default:0"`
+}
 
 type Agency struct {
 	gorm.Model
@@ -12,17 +24,6 @@ type Agency struct {
 	Description string  `gorm:"type:varchar(255);not null"`
 	Plan        string  `gorm:"type:varchar(255);not null"`
 	Offers      []Offer `gorm:"foreignKey:AgencyID"`
-}
-
-type Offer struct {
-	ID          string    `gorm:"primaryKey;type:varchar(255);not null;unique;autoIncrement:true"`
-	Name        string    `gorm:"type:varchar(255);not null;unique"`
-	Description string    `gorm:"type:varchar(255);not null;unique"`
-	Price       float64   `gorm:"type:float;not null;unique"`
-	Date        string    `gorm:"type:varchar(255);not null;unique"`
-	AgencyID    string    `gorm:"type:varchar(255);not null;unique;references:agencies"`
-	Rating      int32     `gorm:"type:int;not null;default:0"`
-	OfferType   OfferType `gorm:"type:int;not null;default:0"`
 }
 
 type OfferType int
