@@ -11,12 +11,15 @@ func getDataBaseUrl() string {
 	host := os.Getenv("DB_HOST")
 	user := os.Getenv("DB_USERNAME")
 	password := os.Getenv("DB_PASSWORD")
+	db_name := os.Getenv("DB_NAME")
+	port:=os.Getenv("DB_PORT")
+	
 	if host == "" || user == "" || password == "" {
 		host = "localhost"
 		user = "postgres"
 		password = "password"
 	}
-	return "host=" + host + " user=" + user + " password=" + password + " dbname=agency_management port=5432"
+	return "host=" + host + " user=" + user + " password=" + password + " dbname=" + db_name+ " port=" + port
 }
 
 func Conn() *gorm.DB {

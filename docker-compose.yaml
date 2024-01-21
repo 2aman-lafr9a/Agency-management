@@ -9,7 +9,7 @@ services:
     environment:
       POSTGRES_PASSWORD: postgres
       PGDATA: /var/lib/postgresql/data/pgdata
-      POSTGRES_DB: agency_management
+      POSTGRES_DB: agency_offers_database
     volumes:
       - /var/lib/postgresql/data
     restart: always
@@ -27,6 +27,8 @@ services:
       DB_HOST: agency_offers_database
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
+      DB_NAME: agency_offers_database
+      DB_PORT: 5432
     networks:
       - aman_network
   offer_management:
@@ -41,6 +43,8 @@ services:
       DB_HOST: agency_offers_database
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
+      DB_NAME: agency_offers_database
+      DB_PORT: 5432
     networks:
       - aman_network
 
