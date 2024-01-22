@@ -108,6 +108,8 @@ func (srv *OfferService) transformOfferRPCDelete(req *pb.DeleteOfferRequest) *mo
 }
 
 func (srv *OfferService) transformOfferModel(offer models.Offer) *pb.CreateOfferResponse {
+	agency, _ := srv.useCase.FindAgencyByID(offer.AgencyID)
+	agencyItem := srv.transformAgencyModel(*agency)
 	return &pb.CreateOfferResponse{
 		Id:          offer.ID,
 		Name:        offer.Name,
@@ -115,10 +117,13 @@ func (srv *OfferService) transformOfferModel(offer models.Offer) *pb.CreateOffer
 		Price:       int32(offer.Price),
 		Date:        offer.Date,
 		Type:        pb.OfferType(offer.OfferType),
+		Agency:      &agencyItem,
 	}
 }
 
 func (srv *OfferService) transformOfferModelGet(offer models.Offer) *pb.GetOfferResponse {
+	agency, _ := srv.useCase.FindAgencyByID(offer.AgencyID)
+	agencyItem := srv.transformAgencyModel(*agency)
 	return &pb.GetOfferResponse{
 		Id:          offer.ID,
 		Name:        offer.Name,
@@ -127,12 +132,15 @@ func (srv *OfferService) transformOfferModelGet(offer models.Offer) *pb.GetOffer
 		Date:        offer.Date,
 		Rating:      offer.Rating,
 		Type:        pb.OfferType(offer.OfferType),
+		Agency:      &agencyItem,
 	}
 }
 
 func (srv *OfferService) transformOffersModel(offers []*models.Offer) *pb.GetOffersResponse {
 	var offersRPC []*pb.OfferItem
 	for _, offer := range offers {
+		agency, _ := srv.useCase.FindAgencyByID(offer.AgencyID)
+		agencyItem := srv.transformAgencyModel(*agency)
 		offersRPC = append(offersRPC, &pb.OfferItem{
 			Id:          offer.ID,
 			Name:        offer.Name,
@@ -141,6 +149,7 @@ func (srv *OfferService) transformOffersModel(offers []*models.Offer) *pb.GetOff
 			Date:        offer.Date,
 			Rating:      offer.Rating,
 			Type:        pb.OfferType(offer.OfferType),
+			Agency:      &agencyItem,
 		})
 	}
 	return &pb.GetOffersResponse{
@@ -151,5 +160,14 @@ func (srv *OfferService) transformOffersModel(offers []*models.Offer) *pb.GetOff
 func (srv *OfferService) transformOfferModelDelete(offer models.Offer) *pb.DeleteOfferResponse {
 	return &pb.DeleteOfferResponse{
 		Id: offer.ID,
+	}
+}
+
+func (srv *OfferService) transformAgencyModel(agency models.Agency) pb.AgencyItem {
+	return pb.AgencyItem{
+		Id:          agency.ID,
+		Name:        agency.Name,
+		Description: agency.Description,
+		Plan:        agency.Plan,
 	}
 }

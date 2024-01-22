@@ -11,8 +11,9 @@ type Repository struct {
 }
 
 func (r Repository) FindAgencyByID(id string) (*models2.Agency, error) {
-	err := r.db.Where("id=?", id).First(&models2.Agency{}).Error
-	return &models2.Agency{}, err
+	agency := &models2.Agency{}
+	err := r.db.Where("id=?", id).First(agency).Error
+	return agency, err
 }
 
 func New2(db *gorm.DB) *Repository {
