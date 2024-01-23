@@ -9,16 +9,21 @@ import (
 )
 
 func TestCreateOffer(t *testing.T) {
-	conn, err := grpc.Dial("localhost:8080", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.Dial("localhost:50002", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		t.Fatalf("did not connect: %v", err)
 	}
 	defer conn.Close()
 
-	client := pb.NewOfferServiceClient(conn)
+	client := pb.NewOfferClient(conn)
 
 	request := &pb.CreateOfferRequest{
-		Name: "Offer 1",
+		Name:        "Offer 1",
+		AgencyID:    "1",
+		Price:       100,
+		Description: "Offer Description 1",
+		Date:        "2021-01-01",
+		Type:        pb.OfferType_Important,
 	}
 
 	res, err := client.CreateOffer(context.Background(), request)
@@ -33,13 +38,13 @@ func TestCreateOffer(t *testing.T) {
 }
 
 func TestGetOffer(t *testing.T) {
-	conn, err := grpc.Dial("localhost:8080", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.Dial("localhost:50002", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		t.Fatalf("did not connect: %v", err)
 	}
 	defer conn.Close()
 
-	client := pb.NewOfferServiceClient(conn)
+	client := pb.NewOfferClient(conn)
 
 	request := &pb.GetOfferRequest{
 		Name: "Offer 1",
@@ -57,13 +62,13 @@ func TestGetOffer(t *testing.T) {
 }
 
 func TestGetOffers(t *testing.T) {
-	conn, err := grpc.Dial("localhost:8080", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.Dial("localhost:50002", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		t.Fatalf("did not connect: %v", err)
 	}
 	defer conn.Close()
 
-	client := pb.NewOfferServiceClient(conn)
+	client := pb.NewOfferClient(conn)
 
 	request := &pb.GetOffersRequest{}
 
@@ -79,16 +84,21 @@ func TestGetOffers(t *testing.T) {
 }
 
 func TestUpdateOffer(t *testing.T) {
-	conn, err := grpc.Dial("localhost:8080", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.Dial("localhost:50002", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		t.Fatalf("did not connect: %v", err)
 	}
 	defer conn.Close()
 
-	client := pb.NewOfferServiceClient(conn)
+	client := pb.NewOfferClient(conn)
 
 	request := &pb.UpdateOfferRequest{
-		Name: "Offer 1",
+		Id:          "1",
+		Name:        "Offer 1",
+		Description: "Offer Description 1",
+		Price:       100,
+		Date:        "2021-01-01",
+		Type:        pb.OfferType_Important,
 	}
 
 	res, err := client.UpdateOffer(context.Background(), request)
@@ -103,13 +113,13 @@ func TestUpdateOffer(t *testing.T) {
 }
 
 func TestDeleteOffer(t *testing.T) {
-	conn, err := grpc.Dial("localhost:8080", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.Dial("localhost:50002", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		t.Fatalf("did not connect: %v", err)
 	}
 	defer conn.Close()
 
-	client := pb.NewOfferServiceClient(conn)
+	client := pb.NewOfferClient(conn)
 
 	request := &pb.DeleteOfferRequest{
 		Id: "1",
