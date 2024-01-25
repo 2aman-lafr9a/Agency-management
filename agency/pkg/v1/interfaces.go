@@ -12,6 +12,7 @@ type AgencyInterface interface {
 	Delete(agency *models.Agency) error
 	FindByName(name string) (*models.Agency, error)
 	FindByEmail(email string) (*models.Agency, error)
+	FindOffersByAgencyID(id string) ([]*models.Offer, error)
 }
 
 type UseCaseInterface interface {
@@ -22,4 +23,5 @@ type UseCaseInterface interface {
 	FindById(id string) (*models.Agency, error)
 	FindByName(name string) (*models.Agency, error)
 	FindByEmail(email string) (*models.Agency, error)
+	FindOffersByAgencyID(id string) ([]*models.Offer, error)
 }

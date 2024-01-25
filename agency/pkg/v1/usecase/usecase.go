@@ -11,6 +11,11 @@ type UseCase struct {
 	repo interfaces.AgencyInterface
 }
 
+func (u UseCase) FindOffersByAgencyID(id string) ([]*models.Offer, error) {
+	agencies, err := u.repo.FindOffersByAgencyID(id)
+	return agencies, err
+}
+
 func (u UseCase) FindAll() ([]*models.Agency, error) {
 	agencies, err := u.repo.FindAll()
 	return agencies, err

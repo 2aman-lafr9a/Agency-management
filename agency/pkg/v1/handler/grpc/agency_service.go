@@ -43,6 +43,14 @@ func (srv *AgencyService) GetAgency(ctx context.Context, req *pb.GetAgencyReques
 	if agency == nil {
 		return &pb.GetAgencyResponse{}, errors.New("agency not found")
 	}
+	offers, err := srv.useCase.FindOffersByAgencyID(agency.ID)
+	if offers == nil {
+		return &pb.GetAgencyResponse{}, errors.New("offers not found")
+	}
+	for _, offer := range offers {
+		offerModelToOffer(*offer)
+		agency.Offers = append(agency.Offers, *offer)
+	}
 	return srv.transformAgencyModelGet(*agency), err
 }
 
@@ -50,6 +58,16 @@ func (srv *AgencyService) GetAgencies(ctx context.Context, req *pb.GetAgenciesRe
 	agencies, err := srv.useCase.FindAll()
 	if agencies == nil {
 		return &pb.GetAgenciesResponse{}, errors.New("agencies not found")
+	}
+	for _, agency := range agencies {
+		offers, _ := srv.useCase.FindOffersByAgencyID(agency.ID)
+		if offers == nil {
+			return &pb.GetAgenciesResponse{}, errors.New("offers not found")
+		}
+		for _, offer := range offers {
+			offerModelToOffer(*offer)
+			agency.Offers = append(agency.Offers, *offer)
+		}
 	}
 	return srv.transformAgenciesModel(agencies), err
 }
@@ -226,5 +244,18 @@ func offerToOfferItem(offer models.Offer) *pb.OfferItem {
 		Date:        offer.Date,
 		Rating:      offer.Rating,
 		Type:        pb.OfferType(offer.OfferType),
+	}
+}
+
+func offerModelToOffer(offer models.Offer) *models.Offer {
+	return &models.Offer{
+		ID:          offer.ID,
+		Name:        offer.Name,
+		Description: offer.Description,
+		Price:       offer.Price,
+		Date:        offer.Date,
+		Rating:      offer.Rating,
+		OfferType:   offer.OfferType,
+		AgencyID:    offer.AgencyID,
 	}
 }

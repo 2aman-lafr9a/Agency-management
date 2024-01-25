@@ -9,16 +9,18 @@ import (
 )
 
 func TestCreateAgency(t *testing.T) {
-	conn, err := grpc.Dial("localhost:8080", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.Dial("localhost:50001", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		t.Fatalf("did not connect: %v", err)
 	}
 	defer conn.Close()
 
-	client := pb.NewAgencyServiceClient(conn)
+	client := pb.NewAgencyClient(conn)
 
 	request := &pb.CreateAgencyRequest{
-		Name: "AgencyID 1",
+		Name:        "AgencyID 1",
+		Description: "Agency Description 1",
+		Plan:        "Agency Plan 1",
 	}
 
 	res, err := client.CreateAgency(context.Background(), request)
@@ -33,13 +35,13 @@ func TestCreateAgency(t *testing.T) {
 }
 
 func TestGetAgency(t *testing.T) {
-	conn, err := grpc.Dial("localhost:8080", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.Dial("localhost:50001", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		t.Fatalf("did not connect: %v", err)
 	}
 	defer conn.Close()
 
-	client := pb.NewAgencyServiceClient(conn)
+	client := pb.NewAgencyClient(conn)
 
 	request := &pb.GetAgencyRequest{
 		Name: "AgencyID 1",
@@ -57,13 +59,13 @@ func TestGetAgency(t *testing.T) {
 }
 
 func TestGetAgencies(t *testing.T) {
-	conn, err := grpc.Dial("localhost:8080", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.Dial("localhost:50001", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		t.Fatalf("did not connect: %v", err)
 	}
 	defer conn.Close()
 
-	client := pb.NewAgencyServiceClient(conn)
+	client := pb.NewAgencyClient(conn)
 
 	request := &pb.GetAgenciesRequest{}
 
@@ -79,16 +81,19 @@ func TestGetAgencies(t *testing.T) {
 }
 
 func TestUpdateAgency(t *testing.T) {
-	conn, err := grpc.Dial("localhost:8080", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.Dial("localhost:50001", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		t.Fatalf("did not connect: %v", err)
 	}
 	defer conn.Close()
 
-	client := pb.NewAgencyServiceClient(conn)
+	client := pb.NewAgencyClient(conn)
 
 	request := &pb.UpdateAgencyRequest{
-		Name: "AgencyID 1",
+		Id:          "1",
+		Name:        "AgencyID 1",
+		Description: "Agency Description 1",
+		Plan:        "Agency Plan 1",
 	}
 
 	res, err := client.UpdateAgency(context.Background(), request)
@@ -103,13 +108,13 @@ func TestUpdateAgency(t *testing.T) {
 }
 
 func TestDeleteAgency(t *testing.T) {
-	conn, err := grpc.Dial("localhost:8080", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.Dial("localhost:50001", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		t.Fatalf("did not connect: %v", err)
 	}
 	defer conn.Close()
 
-	client := pb.NewAgencyServiceClient(conn)
+	client := pb.NewAgencyClient(conn)
 
 	request := &pb.DeleteAgencyRequest{
 		Id: "1",
