@@ -10,7 +10,7 @@ type Offer struct {
 	Name        string    `gorm:"type:varchar(255);not null;unique"`
 	Description string    `gorm:"type:varchar(255);not null"`
 	Price       float64   `gorm:"type:float;not null"`
-	Date        string    `gorm:"type:varchar(255);not null"`
+	Date        string    `gorm:"type:varchar(255);not null;default:Date"`
 	AgencyID    string    `gorm:"type:varchar(255);not null;"`
 	Rating      int32     `gorm:"type:int;not null;default:0"`
 	OfferType   OfferType `gorm:"type:int;not null;default:0"`
@@ -19,11 +19,12 @@ type Offer struct {
 type Agency struct {
 	gorm.Model
 
-	ID          string  `gorm:"primaryKey;type:varchar(255);not null;unique;autoIncrement:true"`
-	Name        string  `gorm:"type:varchar(255);not null;unique"`
-	Description string  `gorm:"type:varchar(255);not null"`
-	Plan        string  `gorm:"type:varchar(255);not null"`
-	Offers      []Offer `gorm:"foreignKey:AgencyID"`
+	ID            string  `gorm:"primaryKey;type:varchar(255);not null;unique;autoIncrement:true"`
+	Name          string  `gorm:"type:varchar(255);not null;unique"`
+	Description   string  `gorm:"type:varchar(255);not null"`
+	Plan          string  `gorm:"type:varchar(255);not null"`
+	WalletAddress string  `gorm:"type:varchar(255);not null"`
+	Offers        []Offer `gorm:"foreignKey:AgencyID"`
 }
 
 type OfferType int

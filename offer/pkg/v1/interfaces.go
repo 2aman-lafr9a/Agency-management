@@ -12,6 +12,7 @@ type OfferInterface interface {
 	Delete2(offer *models2.Offer) error
 	FindByName2(name string) (*models2.Offer, error)
 	FindAgencyByID(id string) (*models2.Agency, error)
+	FindOfferByID(id string) (*models2.Offer, error)
 }
 
 type UseCaseInterface interface {
@@ -22,4 +23,5 @@ type UseCaseInterface interface {
 	FindById2(id string) (*models2.Offer, error)
 	FindByName2(name string) (*models2.Offer, error)
 	FindAgencyByID(id string) (*models2.Agency, error)
+	FindOfferByID(id string) (*models2.Offer, error)
 }

@@ -27,6 +27,7 @@ type AgencyClient interface {
 	CreateAgency(ctx context.Context, in *CreateAgencyRequest, opts ...grpc.CallOption) (*CreateAgencyResponse, error)
 	UpdateAgency(ctx context.Context, in *UpdateAgencyRequest, opts ...grpc.CallOption) (*UpdateAgencyResponse, error)
 	DeleteAgency(ctx context.Context, in *DeleteAgencyRequest, opts ...grpc.CallOption) (*DeleteAgencyResponse, error)
+	GetAgencyByWallet(ctx context.Context, in *GetAgencyByWalletRequest, opts ...grpc.CallOption) (*GetAgencyByWalletResponse, error)
 }
 
 type agencyClient struct {
@@ -82,6 +83,15 @@ func (c *agencyClient) DeleteAgency(ctx context.Context, in *DeleteAgencyRequest
 	return out, nil
 }
 
+func (c *agencyClient) GetAgencyByWallet(ctx context.Context, in *GetAgencyByWalletRequest, opts ...grpc.CallOption) (*GetAgencyByWalletResponse, error) {
+	out := new(GetAgencyByWalletResponse)
+	err := c.cc.Invoke(ctx, "/agency.Agency/GetAgencyByWallet", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AgencyServer is the server API for Agency service.
 // All implementations must embed UnimplementedAgencyServer
 // for forward compatibility
@@ -91,6 +101,7 @@ type AgencyServer interface {
 	CreateAgency(context.Context, *CreateAgencyRequest) (*CreateAgencyResponse, error)
 	UpdateAgency(context.Context, *UpdateAgencyRequest) (*UpdateAgencyResponse, error)
 	DeleteAgency(context.Context, *DeleteAgencyRequest) (*DeleteAgencyResponse, error)
+	GetAgencyByWallet(context.Context, *GetAgencyByWalletRequest) (*GetAgencyByWalletResponse, error)
 	mustEmbedUnimplementedAgencyServer()
 }
 
@@ -112,6 +123,9 @@ func (UnimplementedAgencyServer) UpdateAgency(context.Context, *UpdateAgencyRequ
 }
 func (UnimplementedAgencyServer) DeleteAgency(context.Context, *DeleteAgencyRequest) (*DeleteAgencyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAgency not implemented")
+}
+func (UnimplementedAgencyServer) GetAgencyByWallet(context.Context, *GetAgencyByWalletRequest) (*GetAgencyByWalletResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAgencyByWallet not implemented")
 }
 func (UnimplementedAgencyServer) mustEmbedUnimplementedAgencyServer() {}
 
@@ -216,6 +230,24 @@ func _Agency_DeleteAgency_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Agency_GetAgencyByWallet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAgencyByWalletRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AgencyServer).GetAgencyByWallet(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/agency.Agency/GetAgencyByWallet",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AgencyServer).GetAgencyByWallet(ctx, req.(*GetAgencyByWalletRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Agency_ServiceDesc is the grpc.ServiceDesc for Agency service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -242,6 +274,10 @@ var Agency_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteAgency",
 			Handler:    _Agency_DeleteAgency_Handler,
+		},
+		{
+			MethodName: "GetAgencyByWallet",
+			Handler:    _Agency_GetAgencyByWallet_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

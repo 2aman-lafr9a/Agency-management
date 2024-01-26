@@ -11,6 +11,11 @@ type UseCase struct {
 	repo2 interfaces.OfferInterface
 }
 
+func (u UseCase) FindOfferByID(id string) (*models2.Offer, error) {
+	offer, err := u.repo2.FindOfferByID(id)
+	return offer, err
+}
+
 func (u UseCase) FindAgencyByID(id string) (*models2.Agency, error) {
 	agency, err := u.repo2.FindAgencyByID(id)
 	return agency, err
