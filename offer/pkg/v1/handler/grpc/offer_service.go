@@ -73,6 +73,21 @@ func (srv *OfferService) DeleteOffer(ctx context.Context, req *pb.DeleteOfferReq
 	return srv.transformOfferModelDelete(*data), nil
 }
 
+func (srv *OfferService) GetOfferById(ctx context.Context, req *pb.GetOfferIdRequest) (*pb.GetOfferIdResponse, error) {
+	data := srv.transformOfferRPCGetId(req)
+	if data.ID == "" {
+		return &pb.GetOfferIdResponse{}, errors.New("id is required")
+	}
+	offer, _ := srv.useCase.FindById2(data.ID)
+	return (*pb.GetOfferIdResponse)(srv.transformOfferModelGet(*offer)), nil
+}
+
+func (srv *OfferService) transformOfferRPCGetId(req *pb.GetOfferIdRequest) *models.Offer {
+	return &models.Offer{
+		ID: req.Id,
+	}
+}
+
 func (srv *OfferService) transformOfferRPC(req *pb.CreateOfferRequest) *models.Offer {
 	return &models.Offer{
 		Name:        req.GetName(),

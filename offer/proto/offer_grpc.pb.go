@@ -27,6 +27,7 @@ type OfferClient interface {
 	CreateOffer(ctx context.Context, in *CreateOfferRequest, opts ...grpc.CallOption) (*CreateOfferResponse, error)
 	UpdateOffer(ctx context.Context, in *UpdateOfferRequest, opts ...grpc.CallOption) (*UpdateOfferResponse, error)
 	DeleteOffer(ctx context.Context, in *DeleteOfferRequest, opts ...grpc.CallOption) (*DeleteOfferResponse, error)
+	GetOfferById(ctx context.Context, in *GetOfferIdRequest, opts ...grpc.CallOption) (*GetOfferIdResponse, error)
 }
 
 type offerClient struct {
@@ -82,6 +83,15 @@ func (c *offerClient) DeleteOffer(ctx context.Context, in *DeleteOfferRequest, o
 	return out, nil
 }
 
+func (c *offerClient) GetOfferById(ctx context.Context, in *GetOfferIdRequest, opts ...grpc.CallOption) (*GetOfferIdResponse, error) {
+	out := new(GetOfferIdResponse)
+	err := c.cc.Invoke(ctx, "/offer.Offer/GetOfferById", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OfferServer is the server API for Offer service.
 // All implementations must embed UnimplementedOfferServer
 // for forward compatibility
@@ -91,6 +101,7 @@ type OfferServer interface {
 	CreateOffer(context.Context, *CreateOfferRequest) (*CreateOfferResponse, error)
 	UpdateOffer(context.Context, *UpdateOfferRequest) (*UpdateOfferResponse, error)
 	DeleteOffer(context.Context, *DeleteOfferRequest) (*DeleteOfferResponse, error)
+	GetOfferById(context.Context, *GetOfferIdRequest) (*GetOfferIdResponse, error)
 	mustEmbedUnimplementedOfferServer()
 }
 
@@ -112,6 +123,9 @@ func (UnimplementedOfferServer) UpdateOffer(context.Context, *UpdateOfferRequest
 }
 func (UnimplementedOfferServer) DeleteOffer(context.Context, *DeleteOfferRequest) (*DeleteOfferResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteOffer not implemented")
+}
+func (UnimplementedOfferServer) GetOfferById(context.Context, *GetOfferIdRequest) (*GetOfferIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetOfferById not implemented")
 }
 func (UnimplementedOfferServer) mustEmbedUnimplementedOfferServer() {}
 
@@ -216,6 +230,24 @@ func _Offer_DeleteOffer_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Offer_GetOfferById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetOfferIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OfferServer).GetOfferById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/offer.Offer/GetOfferById",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OfferServer).GetOfferById(ctx, req.(*GetOfferIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Offer_ServiceDesc is the grpc.ServiceDesc for Offer service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -242,6 +274,10 @@ var Offer_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteOffer",
 			Handler:    _Offer_DeleteOffer_Handler,
+		},
+		{
+			MethodName: "GetOfferById",
+			Handler:    _Offer_GetOfferById_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
