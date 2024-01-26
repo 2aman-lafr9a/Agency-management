@@ -95,11 +95,37 @@ func (srv *AgencyService) DeleteAgency(ctx context.Context, req *pb.DeleteAgency
 	return srv.transformAgencyModelDelete(*data), nil
 }
 
+func (srv *AgencyService) GetAgencyByWallet(ctx context.Context, req *pb.GetAgencyByWalletRequest) (*pb.GetAgencyByWalletResponse, error) {
+	data := srv.transformAgencyRPCFindAgencyByWalletAddress(req)
+	if data.WalletAddress == "" {
+		return &pb.GetAgencyByWalletResponse{}, errors.New("wallet address is required")
+	}
+	agency, err := srv.useCase.FindAgencyByWalletAddress(data.WalletAddress)
+	return srv.transformAgencyModelFindAgencyByWalletAddress(*agency), err
+}
+
+func (srv *AgencyService) transformAgencyRPCFindAgencyByWalletAddress(req *pb.GetAgencyByWalletRequest) *models.Agency {
+	return &models.Agency{
+		WalletAddress: req.Wallet,
+	}
+}
+
+func (srv *AgencyService) transformAgencyModelFindAgencyByWalletAddress(agency models.Agency) *pb.GetAgencyByWalletResponse {
+	return &pb.GetAgencyByWalletResponse{
+		Id:          agency.ID,
+		Name:        agency.Name,
+		Description: agency.Description,
+		Plan:        agency.Plan,
+		Offers:      nil,
+	}
+}
+
 func (srv *AgencyService) transformAgencyRPC(req *pb.CreateAgencyRequest) *models.Agency {
 	return &models.Agency{
-		Name:        req.GetName(),
-		Description: req.GetDescription(),
-		Plan:        req.GetPlan(),
+		Name:          req.GetName(),
+		Description:   req.GetDescription(),
+		Plan:          req.GetPlan(),
+		WalletAddress: req.GetWallet(),
 	}
 }
 
@@ -129,6 +155,7 @@ func (srv *AgencyService) transformAgencyModel(agency models.Agency) *pb.CreateA
 		Name:        agency.Name,
 		Description: agency.Description,
 		Plan:        agency.Plan,
+		Wallet:      agency.WalletAddress,
 	}
 }
 
@@ -140,6 +167,7 @@ func (srv *AgencyService) transformAgencyModelGet(agency models.Agency) *pb.GetA
 			Description: agency.Description,
 			Plan:        agency.Plan,
 			Offers:      nil,
+			Wallet:      agency.WalletAddress,
 		}
 	}
 	var offers []*pb.OfferItem
@@ -153,6 +181,7 @@ func (srv *AgencyService) transformAgencyModelGet(agency models.Agency) *pb.GetA
 		Description: agency.Description,
 		Plan:        agency.Plan,
 		Offers:      offers,
+		Wallet:      agency.WalletAddress,
 	}
 }
 
@@ -164,6 +193,7 @@ func (srv *AgencyService) transformAgencyModelUpdate(agency models.Agency) *pb.U
 			Description: agency.Description,
 			Plan:        agency.Plan,
 			Offers:      nil,
+			Wallet:      agency.WalletAddress,
 		}
 	}
 	var offers []*pb.OfferItem
@@ -177,6 +207,7 @@ func (srv *AgencyService) transformAgencyModelUpdate(agency models.Agency) *pb.U
 		Description: agency.Description,
 		Plan:        agency.Plan,
 		Offers:      offers,
+		Wallet:      agency.WalletAddress,
 	}
 }
 
@@ -190,6 +221,7 @@ func (srv *AgencyService) transformAgenciesModel(agencies []*models.Agency) *pb.
 				Description: agency.Description,
 				Plan:        agency.Plan,
 				Offers:      nil,
+				Wallet:      agency.WalletAddress,
 			})
 			continue
 		}
@@ -204,6 +236,7 @@ func (srv *AgencyService) transformAgenciesModel(agencies []*models.Agency) *pb.
 			Description: agency.Description,
 			Plan:        agency.Plan,
 			Offers:      offers,
+			Wallet:      agency.WalletAddress,
 		})
 	}
 	return &pb.GetAgenciesResponse{
@@ -219,6 +252,7 @@ func (srv *AgencyService) transformAgencyModelDelete(agency models.Agency) *pb.D
 			Plan:        agency.Plan,
 			Name:        agency.Name,
 			Offers:      nil,
+			Wallet:      agency.WalletAddress,
 		}
 	}
 	var offers []*pb.OfferItem
@@ -232,6 +266,7 @@ func (srv *AgencyService) transformAgencyModelDelete(agency models.Agency) *pb.D
 		Plan:        agency.Plan,
 		Name:        agency.Name,
 		Offers:      offers,
+		Wallet:      agency.WalletAddress,
 	}
 }
 

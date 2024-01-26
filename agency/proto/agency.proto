@@ -13,6 +13,7 @@ service Agency {
   rpc CreateAgency(CreateAgencyRequest) returns (CreateAgencyResponse);
   rpc UpdateAgency(UpdateAgencyRequest) returns (UpdateAgencyResponse);
   rpc DeleteAgency(DeleteAgencyRequest) returns (DeleteAgencyResponse);
+  rpc GetAgencyByWallet(GetAgencyByWalletRequest) returns (GetAgencyByWalletResponse);
 }
 
 message AgencyItem{
@@ -21,6 +22,7 @@ message AgencyItem{
   string plan = 3;
   repeated OfferItem offers = 4;
   string description = 5;
+  string wallet = 6;
 }
 
 message GetAgenciesRequest{
@@ -40,25 +42,29 @@ message GetAgencyResponse{
   string plan = 3;
   repeated OfferItem offers = 4;
   string description = 5;
+  string wallet = 6;
 }
 
 message CreateAgencyRequest{
   string name = 1;
   string plan = 2;
   string description = 3;
+  string wallet = 4;
 }
 
 message CreateAgencyResponse{
   string name = 1;
   string plan = 2;
   string description = 3;
+  string wallet = 4;
 }
 
 message UpdateAgencyRequest{
   string id = 1;
   string name = 2;
   string plan = 3;
-  string description = 5;
+  string description = 4;
+  string wallet = 5;
 }
 
 message UpdateAgencyResponse{
@@ -67,6 +73,7 @@ message UpdateAgencyResponse{
   string plan = 3;
   repeated OfferItem offers = 4;
   string description = 5;
+  string wallet = 6;
 }
 
 message DeleteAgencyRequest{
@@ -79,6 +86,7 @@ message DeleteAgencyResponse{
   string plan = 3;
   repeated OfferItem offers = 4;
   string description = 5;
+  string wallet = 6;
 }
 
 
@@ -98,4 +106,16 @@ enum  OfferType {
   Special = 1;
   Important = 2;
   Ultimate = 3;
+}
+
+message GetAgencyByWalletRequest{
+  string wallet = 1;
+}
+
+message GetAgencyByWalletResponse{
+  string id = 1;
+  string name = 2;
+  string plan = 3;
+  repeated OfferItem offers = 4;
+  string description = 5;
 }

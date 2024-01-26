@@ -10,6 +10,12 @@ type Repository struct {
 	db *gorm.DB
 }
 
+func (r Repository) FindAgencyByWalletAddress(walletAddress string) (*models.Agency, error) {
+	agency := &models.Agency{}
+	err := r.db.Where("wallet_address=?", walletAddress).First(agency).Error
+	return agency, err
+}
+
 func (r Repository) FindOffersByAgencyID(id string) ([]*models.Offer, error) {
 	var offers []*models.Offer
 	err := r.db.Where("agency_id=?", id).Find(&offers).Error
