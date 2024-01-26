@@ -11,7 +11,7 @@ services:
       PGDATA: /var/lib/postgresql/data/pgdata
       POSTGRES_DB: agency_offers_database
     volumes:
-      - /var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
     restart: always
     networks:
       - aman_network
@@ -53,3 +53,5 @@ networks:
   aman_network:
     driver: bridge
     external: true
+volumes:
+  postgres_data:
