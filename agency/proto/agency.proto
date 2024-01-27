@@ -118,4 +118,5 @@ message GetAgencyByWalletResponse{
   string plan = 3;
   repeated OfferItem offers = 4;
   string description = 5;
+  string wallet = 6;
 }

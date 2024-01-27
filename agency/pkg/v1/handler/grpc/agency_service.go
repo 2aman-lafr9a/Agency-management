@@ -81,6 +81,7 @@ func (srv *AgencyService) UpdateAgency(ctx context.Context, req *pb.UpdateAgency
 	agency.Name = data.Name
 	agency.Plan = data.Plan
 	agency.Description = data.Description
+	agency.WalletAddress = data.WalletAddress
 	_ = srv.useCase.Update(agency)
 	return srv.transformAgencyModelUpdate(*agency), err
 }
@@ -111,12 +112,29 @@ func (srv *AgencyService) transformAgencyRPCFindAgencyByWalletAddress(req *pb.Ge
 }
 
 func (srv *AgencyService) transformAgencyModelFindAgencyByWalletAddress(agency models.Agency) *pb.GetAgencyByWalletResponse {
+	offerItem := &pb.OfferItem{}
+	if agency.Offers != nil {
+		for _, offer := range agency.Offers {
+			offerItem = offerToOfferItem(offer)
+		}
+	}
+	if agency.Offers == nil {
+		return &pb.GetAgencyByWalletResponse{
+			Id:          agency.ID,
+			Name:        agency.Name,
+			Description: agency.Description,
+			Plan:        agency.Plan,
+			Offers:      nil,
+			Wallet:      agency.WalletAddress,
+		}
+	}
 	return &pb.GetAgencyByWalletResponse{
 		Id:          agency.ID,
 		Name:        agency.Name,
 		Description: agency.Description,
 		Plan:        agency.Plan,
-		Offers:      nil,
+		Offers:      []*pb.OfferItem{offerItem},
+		Wallet:      agency.WalletAddress,
 	}
 }
 
@@ -137,10 +155,11 @@ func (srv *AgencyService) transformAgencyRPCGet(req *pb.GetAgencyRequest) *model
 
 func (srv *AgencyService) transformAgencyRPCUpdate(req *pb.UpdateAgencyRequest) *models.Agency {
 	return &models.Agency{
-		ID:          req.GetId(),
-		Name:        req.GetName(),
-		Description: req.GetDescription(),
-		Plan:        req.GetPlan(),
+		ID:            req.GetId(),
+		Name:          req.GetName(),
+		Description:   req.GetDescription(),
+		Plan:          req.GetPlan(),
+		WalletAddress: req.GetWallet(),
 	}
 }
 
